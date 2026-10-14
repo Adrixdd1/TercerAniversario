@@ -240,11 +240,9 @@
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
-    // Fechas de apertura
     const targetDate = new Date(2026, 9, 14, 0, 0, 0).getTime();
     const noonDate = new Date(2026, 9, 14, 12, 0, 0).getTime();
 
-    // Almacenamiento local (localStorage)
     let customTitles = [];
     try {
         const stored = localStorage.getItem('titulosPersonalizadosCartas');
@@ -359,14 +357,13 @@
         }
     }
 
-    // Escapar HTML para seguridad
     function escapeHTML(str) {
         return str.replace(/[&<>'"]/g, tag => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'}[tag] || tag));
     }
 
     const poemas = [
         'Hoy estuve pensando en ti,\nen lo mucho que te admiro,\nen que sin ti no vivo,\ny si es que vivo, sentido no miro,\npuesto que tuyo yo siempre he sido.\nY es que no concibo,\nsin ti yo estar vivo,\nya que contigo el tiempo no mido,\nya que a tu lado, solo lo mejor exhibo.\n\nMi manzanita hermosa,\ncada vez que mi cuerpo rozas,\ndulces sensaciones en mí dejas,\ndesde tu voz en mis orejas,\nhasta tu calor que quema mis quejas.\n\nCada instante a tu lado,\ncada segundo entre tus brazos,\nes algo por lo que daría todo mi pasado,\npara quedarme a vivir en tus abrazos.',
-        'Entre la penumbra de la vida,\neres la luz que me anima;\nentre la sombra de la huida,\ntu voz es mi salida.\n\nOh, corazón, pedir perdón no debes,\npues entre lo que quisieras,\nsolo la mitad consigo darte;\nsin embargo, implacable eres,\npues permaneces a mi lado,\naunque para acompañarte,\ntan solo tenga mi arte.\nY, si bien no es arte,\nsiempre muero por besarte.\nOh, amada mía, entre tantos seres,\ntan solo tú eres mi alegría.\n\nPor favor, disculparte no debes;\nentre todos los placeres,\ncon ninguno te compararía,\npues de ti no me alejaría.\nÚnicamente deseo mirarte,\nabrazarte y apretarte;\nsentirte distante, mi alma parte,\ny, si bien de mí no esperes\nmás que el amarte y quererte,\nsi tu deseo fuese más, sentirte mal no debes.\nTú molestarme no puedes.\n\nAmarte jamás duele los jueves,\npor eso, amada mía, cada día\nme anima escuchar tu melodía.\nPedir perdón no debes,\ntu actuar alimenta mi poesía,\ntu calor inyecta en mí alegría.\n\nQue quede claro en estos versos:\nsentirte mal no debes,\nmucho menos los días jueves,\npues tu amor es mi vida.\nDejo claro que mi deber es amarte\ny mi intención es explicarte,\na través de mis letras,\nque, por más que comprometas,\npedir perdón no debes,\npues el amor se equivoca,\npero lo nuestro no se toca.\nConfundirte siempre puedes,\npero allá, donde nos encontramos,\neso no importa, pues tú no estás loca;\nsabes bien que nos amamos.',
+        'Entre la penumbra de la vida,\neres la luz que me anima;\nentre la sombra de la huida,\ntu voz es mi salida.\n\nOh, corazón, pedir perdón no debes,\npues entre lo que quisieras,\nsolo la mitad consigo darte;\nsin embargo, implacable eres,\npues permaneces a mi lado,\naunque para acompañarte,\ntan solo tenga mi arte.\nY, si bien no es arte,\nsiempre muero por besarte.\nOh, amada mía, entre tantos seres,\ntan solo tú eres mi alegría.\n\nPor favor, disculparte no debes;\nentre todos los placeres,\ncon ninguno te compararía,\npues de ti no me alejaría.\nÚnicamente deseo mirarte,\nabrazarte y apretarte;\nsentirte distante, mi alma parte,\ny, si bien de mí no esperes\nmás que el amarte y quererte,\nsi tu deseo fuese más, sentirte mal no debes.\nTú molestarme no puedes.\n\nAmarte jamás duele los jueves,\npor eso, amada mía, cada día\nme anima escuchar tu melodía.\nPedir perdón no debes,\ntu actuar alimenta mi poesía,\ntu calor inyecta en mí alegría.\n\nQue quede claro en estos versos:\nsentirte mal no debes,\nmucho menos los días jueves,\npues tu amor es mi vida.\nDejo claro que mi deber es amarte\ny my intención es explicarte,\na través de mis letras,\nque, por más que comprometas,\npedir perdón no debes,\npues el amor se equivoca,\npero lo nuestro no se toca.\nConfundirte siempre puedes,\npero allá, donde nos encontramos,\neso no importa, pues tú no estás loca;\nsabes bien que nos amamos.',
         'Entre tus finos labios,\nque el dolor extinguen\ny sin perdón mi vida exigen,\nfácil es perder mis pasos,\nimposible intentar meter mis brazos,\npues de enfrentarlos soy incapaz.\nY podrá sonar burdaz,\npero, para ser muy justos,\nen ellos podría vivir por lustros.\n\nReflejándome en tus hermosos faros,\nlos que de mi vida son amos,\naquellos que, como el espacio, me envuelven\ny la mirada me devuelven,\nquisiera dejar que en mí gobiernen;\nque mis manos, al apretar\naquellas hermosas mejillas,\nse fundiesen cual arcillas.\nQue entre los placeres de la vida,\nsentir tus olores y alegrías\nes aquello que me aviva.\n\nEspero los micrófonos a sus costados\nvibren de fragante alegría\nal compás de mi poesía;\nque tus ojos, cual estrellas,\nse inunden de lágrimas bellas\nal sentir mi ortografía.\nCada uno de tus sentidos,\noh, princesita mía,\n\nasí como guías mis pasos,\nquiero llenar tus brazos\nde implacables melodías,\nde infinitas poesías.\nQuisiera llenar tu cuerpo\ncon aquellas sensaciones\nque hacen vibrar corazones.',
         'Sobre ríos uniformes\nnavegan los informes,\nque en desgracias sumen,\npues la vida resumen.\n\nRegistran las acciones,\nlogros y conversaciones;\ntambién guardan divisiones,\ntraiciones y adicciones.\n\nPero su alcance limitan,\npuesto que en ellos\nno hay más que destellos,\nlos cuales, aunque implacables,\nson incluso despreciables.\nPues hay algo que evitan,\naquello que da sentido\na los empedrados caminos\nque avanzamos erguidos.\n\nEntre sencillas tramas\nencierran a los dramas,\npero entre sus palabras\nolvidan aquellas brasas;\nlos momentos tan pequeños\nque avivan nuestros sueños.\n\nQuienes llevan nuestros pasos\nson las grandes coincidencias\nque marcaron la existencia\nde todos los seres vivos,\ncontenidas entre llantos\no liberadas entre gritos.\n\nPues nos guían nuestros sueños\ny, si bien, tampoco somos dueños,\nyo siempre he soñado\ncon existir a tu lado\ny disfrutar de nuestros lazos\nen el calor de tus brazos;\npues lo mejor de estos ratos\nes vivir de tus abrazos.\n\nDe escribirte una canción\nmuere de ganas mi razón;\nen esta vida, corazón,\nno hagas trizas mi ilusión,\nse parte de cada oración.\n\nPues este es mi deseo:\ndedicarte mil y un besos;\nlos mantendré presos\nentre todos mis versos,\nhasta que tus oídos alcancen\no en tus pupilas resalten.\n\nYa que lo que tenemos\nresumirlo es imposible,\npues juntos existimos;\ncada día nos amamos,\ncompartimos poesía\ny abrazamos la alegría.\n\nAquello que nos enlaza\nno cabría en una taza,\npues, sin lugar a dudas,\nvernos con almas desnudas\ny sabernos ambos propios\nnos genera innumerables gozos.\n\nAsí, cada día pintamos los trazos\nque, entre cada uno de tus abrazos,\naseguran en mí los nudos\nque aprietan nuestros lazos\ny hacen mis días tuyos.',
         'La gente teme al espacio\nno por ir despacio,\nsino por su inmensidad\nque, por incomprensión,\nconfundimos con maldad.\n\nPero no hay peor maldad\nque evitar algo hermoso\npor un miedo algo soso,\nya que entre la inmensidad\nresaltan las estrellas\ny vaya que son bellas.\n\nTú no eres una estrella,\npero cargas dos de ellas\ny entre sus destellos\nse apartan mis miedos.\n\nY si bien son como estrellas,\npues incesantes brillan,\nson indudablemente profundos,\nanalíticos, atrayentes y agudos.\n\nAsí, tal vez no son estrellas\ny son fábricas de ellas;\nen ese caso, posees nebulosas\nque son bellas y asombrosas;\ncon su gravedad me inspiras\na mirarte todos los días.\n\nEntre sus luces crías\nen cantidades astronómicas\nincesantes pensamientos\nque engloban sentimientos,\ntodo lo que en tu cabeza pesa.\nAsí, no será sorpresa\nque yo observe las líricas\ny analice sus métricas.\n\nEntonces palabras me tiras\ny con tu inmensidad me miras,\npero no importa qué digas,\npues ya sé lo que litigas.\nOh, corazón, de mí no te rías,\npues no importa que sea a migas.\n\nYa que entenderte intento\ny no descanso ni un momento,\npues entre el entendimiento\nno existe un solo instante\nen que de ti sea distante.\n\nEntre tus ojos me pierdo\npues me encanta hacerlo;\nno existe mejor don\nque a tu corazón poder llegar,\nlogrando el espacio atravesar.',
@@ -377,7 +374,6 @@
         'Quiero hablarte, corazón,\nde aquello con que domas mi razón.\nEntonces, manzanita bonita,\ndéjame explicarte, porque es fácil amarte.\n\nEn primera, al curvar tus labios hacia arriba,\nhaces que todo a tu alrededor sonría;\nlos días son más brillantes cuando muestras tus encías.\n\nEn segunda, el sabor alegre que en mí dejas\ncuando permites que bese tus mejillas,\no cuando te resistes implacable mientras ríes,\npues sabes que no pararé hasta el besito dejarte.\n\nEn tercera, el dulce aroma que desprendes,\npues, cual flor en primavera, mi atención te llevas.\nOlerte podría todo el día, de verdad, no es mentira,\npues aquel aroma es paz y sintonía.\n\nComo cuarta yo pondría el calor de tus abrazos,\npues, cual ardiente sol, calma el frío de mi vida\ny me da la energía para el mundo lograr conquistar.\n\nEn la quinta, sin lugar a dudas, debo mencionar\naquella emoción al verte llegar, ya que, sin dudar,\na tu lado me insta a quedarme\ny no es por hacer alarde.\n\nPero la sexta es, sin duda, caminar a tu lado\ncomo dos seres que son uno mismo;\nandar contigo sin soltarnos\nle da sentido a todo, pues ya nada más importa.\n\nY la séptima, sin duda, es que eres quien me ayuda.\nCuando no quiero ver a nadie, siempre acudes en mi auxilio,\ncomo una heroína que solo por mí acude.\n\nComo octava, no dudo en poner\nel poder que transmites cuando tu atención en un juego centras\ny todo rojo golpeas y, como buena veterana,\na todo el equipo carreas.\n\nLa novena, manzanita, estoy seguro que sería\ncuando finges molestia solo para mi atención llamar,\nporque no es que no me dé cuenta;\nde hecho, me hace emocionar.\n\nY como décima, creo que debo mencionar\nque no pondré una décima razón, pues de solo pensar en ti, corazón,\nveo que no las necesito,\npues nunca podría esta lista terminar.'
     ];
 
-    // Función para guardar los títulos introducidos
     window.guardarNombres = function() {
         let nuevosTitulos = [];
         for (let j = 0; j < 10; j++) {
@@ -396,25 +392,19 @@
 
         customTitles = nuevosTitulos;
         nombresRevelados = true;
-
-        // Aquí sí es necesario rediseñar para aplicar los nuevos nombres en los títulos
         renderizarPoemas();
     };
 
     function renderizarPoemas() {
         const poemsContainer = document.getElementById('poems-container');
-
-        // CORRECCIÓN: Si las cartas ya fueron creadas previamente,
-        // no vaciamos todo el contenedor para evitar que se cierren solas.
         const cartasExistentes = poemsContainer.querySelectorAll('.poem-wrapper');
         const isNoon = Date.now() >= noonDate;
 
-        // Si es la primera vez que se renderiza, construimos las 12 cartas
         if (cartasExistentes.length === 0) {
             for (let i = 0; i < 12; i++) {
                 const wrapper = document.createElement('article');
                 wrapper.className = 'poem-wrapper';
-                wrapper.dataset.index = i; // Identificador estable para cada carta
+                wrapper.dataset.index = i;
 
                 const header = document.createElement('button');
                 header.type = 'button';
@@ -429,9 +419,7 @@
                 content.appendChild(inner);
                 wrapper.append(header, content);
 
-                // Controlador de apertura y cierre (Asegura que solo se abra/cierre esta carta)
                 header.addEventListener('click', () => {
-                    // Verificamos estado de bloqueo en tiempo de ejecución
                     const locked = wrapper.dataset.locked === 'true';
                     if (locked) {
                         wrapper.classList.add('locked-shake');
@@ -440,8 +428,6 @@
                     }
                     const willOpen = !wrapper.classList.contains('open');
 
-                    // Opcional: Si prefieres que las demás se cierren al abrir otra, déjalo.
-                    // Si quieres que varias queden abiertas a la vez, elimina el bloque de abajo.
                     document.querySelectorAll('.poem-wrapper.open').forEach(openWrapper => {
                         if (openWrapper !== wrapper) {
                             openWrapper.classList.remove('open');
@@ -457,7 +443,6 @@
             }
         }
 
-        // Actualizamos el contenido dinámico de cada carta sin destruir los elementos DOM
         const wrappers = poemsContainer.querySelectorAll('.poem-wrapper');
         wrappers.forEach((wrapper, i) => {
             const numCarta = i + 1;
@@ -495,7 +480,6 @@
                 }
             }
 
-            // Guardamos el estado de bloqueo en el dataset para validarlo al hacer clic
             wrapper.dataset.locked = locked;
 
             const header = wrapper.querySelector('.poem-header');
@@ -511,7 +495,6 @@
             if (locked) {
                 inner.innerHTML = `<p class="rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line">${escapeHTML(lockedMsg)}</p>`;
             } else if (injectForm) {
-                // Verificamos si ya existe el formulario para no sobrescribir lo que ella ya esté escribiendo
                 if (!inner.querySelector('input')) {
                     const formWrapper = document.createElement('div');
                     formWrapper.className = 'rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-6 text-center';
@@ -563,101 +546,6 @@
                 inner.innerHTML = contenidoHtml;
             }
         });
-    }
-
-            const wrapper = document.createElement('article');
-            wrapper.className = 'poem-wrapper';
-
-            const header = document.createElement('button');
-            header.type = 'button';
-            header.className = 'poem-header w-full flex items-center justify-between gap-4 p-4 sm:p-5 text-left';
-            header.setAttribute('aria-expanded', 'false');
-
-            // Usamos escapeHTML para asegurar que el título ingresado no rompa el DOM ni inserte scripts
-            header.innerHTML = `
-            <span class="flex items-center gap-3 font-romantic text-2xl sm:text-3xl text-pink-800">
-              <i class="fa-solid ${locked ? 'fa-lock' : 'fa-envelope-open-text'} text-pink-500 text-xl" aria-hidden="true"></i>
-              ${escapeHTML(tituloRaw)}
-            </span>
-            <i class="chevron fa-solid fa-chevron-down text-pink-600 transition-transform duration-300" aria-hidden="true"></i>`;
-
-            const content = document.createElement('div');
-            content.className = 'poem-content';
-            const inner = document.createElement('div');
-            inner.className = 'poem-content-inner';
-
-            if (locked) {
-                inner.innerHTML = `<p class="rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line">${escapeHTML(lockedMsg)}</p>`;
-            } else if (injectForm) {
-                // Generar la interfaz de personalización de títulos de forma segura
-                const formWrapper = document.createElement('div');
-                formWrapper.className = 'rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-6 text-center';
-
-                const instr = document.createElement('p');
-                instr.className = 'font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line mb-4';
-                instr.textContent = 'Ha llegado el mediodía, y con él, el momento de darle su propio nombre a cada parte de esta historia que te he escrito.';
-                formWrapper.appendChild(instr);
-
-                const formDiv = document.createElement('div');
-                formDiv.className = 'mt-4 flex flex-col gap-4 text-left font-sans text-base';
-
-                for(let j = 0; j < 10; j++) {
-                    const fieldWrap = document.createElement('div');
-                    fieldWrap.className = 'flex flex-col';
-
-                    const lbl = document.createElement('label');
-                    lbl.className = 'text-pink-700 font-bold ml-1 mb-1';
-                    lbl.textContent = `Nombre para el Día ${j+1}`;
-
-                    const inp = document.createElement('input');
-                    inp.type = 'text';
-                    inp.id = `input-title-${j}`;
-                    inp.className = 'border border-pink-300 rounded-xl p-3 font-romantic text-2xl text-pink-900 focus:outline-none focus:border-pink-500 bg-white/80 shadow-sm';
-                    inp.placeholder = `Ej. Día ${j+1}`;
-                    inp.value = customTitles[j] || '';
-
-                    fieldWrap.appendChild(lbl);
-                    fieldWrap.appendChild(inp);
-                    formDiv.appendChild(fieldWrap);
-                }
-
-                const btnContainer = document.createElement('div');
-                btnContainer.className = 'mt-6 flex justify-center';
-
-                const saveBtn = document.createElement('button');
-                saveBtn.className = 'primary-btn text-white rounded-full px-8 py-3 text-xl font-bold w-full sm:w-auto';
-                saveBtn.innerHTML = '<i class="fa-solid fa-heart mr-2"></i>Guardar y descubrir el final';
-                saveBtn.onclick = window.guardarNombres;
-
-                btnContainer.appendChild(saveBtn);
-                formDiv.appendChild(btnContainer);
-                formWrapper.appendChild(formDiv);
-
-                inner.appendChild(formWrapper);
-            } else {
-                inner.innerHTML = contenidoHtml;
-            }
-
-            content.appendChild(inner);
-            wrapper.append(header, content);
-
-            header.addEventListener('click', () => {
-                if (locked) {
-                    wrapper.classList.add('locked-shake');
-                    setTimeout(() => wrapper.classList.remove('locked-shake'), 350);
-                    return;
-                }
-                const willOpen = !wrapper.classList.contains('open');
-                document.querySelectorAll('.poem-wrapper.open').forEach(openWrapper => {
-                    openWrapper.classList.remove('open');
-                    openWrapper.querySelector('button').setAttribute('aria-expanded', 'false');
-                });
-                wrapper.classList.toggle('open', willOpen);
-                header.setAttribute('aria-expanded', String(willOpen));
-            });
-
-            poemsContainer.appendChild(wrapper);
-        }
     }
 </script>
 </body>
