@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fce7f3">
+    <title>Hola. corazoncito</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { romantic: ['Caveat', 'cursive'], sans: ['Nunito', 'sans-serif'] },
+                    colors: {
+                        blush: { 50: '#fff8fb', 100: '#fce7f3', 200: '#fbcfe8', 300: '#f9a8d4', 400: '#f472b6', 500: '#ec4899', 600: '#db2777', 700: '#be185d', 800: '#9d174d', 900: '#831843' }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        :root { --rose: #db2777; --paper: #fff8fb; }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { margin: 0; background: #fff8fb; color: #831843; overflow-x: hidden; }
+        button { -webkit-tap-highlight-color: transparent; }
+
+        .paper-bg {
+            background-color: #fff8fb;
+            background-image: radial-gradient(#f9a8d455 .8px, transparent .8px);
+            background-size: 18px 18px;
+        }
+
+        .welcome-stage {
+            isolation: isolate;
+            background: radial-gradient(ellipse at 50% 40%, #fffafd 0%, #ffeaf4 58%, #fbcfe8 100%);
+        }
+
+        .curtain-container {
+            position: fixed; inset: 0; pointer-events: none; z-index: 50;
+            overflow: hidden;
+        }
+        .curtain-panel {
+            position: absolute; top: 0; bottom: 0; width: 50vw;
+            pointer-events: none; transition: transform 1.2s cubic-bezier(.65,0,.35,1);
+            filter: drop-shadow(0 12px 20px #9d174d44);
+        }
+        .curtain-panel.left { left: 0; transform-origin: left center; }
+        .curtain-panel.right { right: 0; transform-origin: right center; }
+        .curtain-panel svg { width: 100%; height: 100%; display: block; preserveAspectRatio: none; }
+
+        .curtain-valance {
+            position: absolute; inset: 0 0 auto; width: 100%; height: clamp(82px, 15vh, 150px);
+            z-index: 52; pointer-events: none; filter: drop-shadow(0 8px 12px #83184340);
+            transform-origin: top center; transition: transform 1.2s cubic-bezier(.65,0,.35,1);
+        }
+        .curtain-valance svg { display: block; width: 100%; height: 100%; }
+        .curtain-valance .valance-highlight { fill: none; stroke: #fbcfe8; stroke-width: 3; stroke-opacity: .9; }
+        .curtain-valance .valance-gold { fill: none; stroke: #f8d9a0; stroke-width: 4; stroke-linecap: round; }
+
+        .stage-light {
+            position: absolute; top: -50px; width: 40vw; height: 100vh;
+            background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.7), rgba(255, 240, 245, 0.2) 50%, transparent 80%);
+            clip-path: polygon(50% 0, 100% 100%, 0 100%);
+            opacity: 0; transition: opacity 1.5s ease 0.5s;
+            z-index: 49; pointer-events: none; mix-blend-mode: screen;
+        }
+        .stage-light.left { left: 5%; transform: rotate(-15deg); }
+        .stage-light.right { right: 5%; transform: rotate(15deg); }
+
+        /* Estado Abierto del Telón (Activado por scroll) ajustado */
+        .curtains-open .curtain-panel.left { transform: translateX(-95%) scaleX(0.3); }
+        .curtains-open .curtain-panel.right { transform: translateX(95%) scaleX(0.3); }
+        .curtains-open .curtain-valance { transform: translateY(-30%) scaleY(0.8); }
+        .curtains-open .stage-light { opacity: 1; }
+
+        .heart-float { animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%,100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-8px) rotate(5deg); } }
+
+        .soft-card { background: #ffffffb8; border: 1px solid #f9a8d4aa; box-shadow: 0 14px 40px #be185d0d; backdrop-filter: blur(7px); }
+        .primary-btn { background: linear-gradient(135deg,#f472b6,#db2777); box-shadow: 0 9px 22px #db277733; transition: transform .2s, box-shadow .2s, opacity .2s; }
+        .primary-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 26px #db277744; }
+        .primary-btn:disabled { opacity: .45; cursor: not-allowed; box-shadow: none; }
+        .secondary-btn { border: 1px solid #f472b6; background: #fff8fbcc; transition: background .2s, transform .2s; }
+        .secondary-btn:hover { background: #fce7f3; transform: translateY(-2px); }
+
+        .music-pulse { animation: pulse-ring 2s infinite; }
+        @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 #ec489966; } 70% { box-shadow: 0 0 0 13px #ec489900; } 100% { box-shadow: 0 0 0 0 #ec489900; } }
+
+        .screen { transition: opacity .4s ease, visibility .4s ease; }
+        .screen-hidden { opacity: 0; visibility: hidden; pointer-events: none; position: absolute; inset: 0 auto auto 0; width: 100%; }
+        .screen-active { opacity: 1; visibility: visible; pointer-events: auto; position: relative; min-height: 100svh; }
+
+        .poem-wrapper { transition: transform .2s ease; margin-bottom: 1rem; }
+        .poem-header { background: linear-gradient(135deg,#fff0f7,#fbcfe8); border: 1px dashed #db2777; border-radius: 16px; box-shadow: 0 5px 14px #8318430b; }
+        .poem-content { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .45s ease, opacity .3s ease; }
+        .poem-content-inner { overflow: hidden; }
+        .poem-wrapper.open .poem-content { grid-template-rows: 1fr; opacity: 1; }
+        .poem-wrapper.open .poem-content-inner { padding-top: 16px; }
+        .poem-wrapper.open .chevron { transform: rotate(180deg); }
+
+        .locked-shake { animation: shake .3s ease; }
+        @keyframes shake { 25% { transform: translateX(5px); } 50% { transform: translateX(-5px); } 75% { transform: translateX(3px); } }
+
+        @media (max-width: 640px) {
+            .curtain-valance { height: clamp(66px, 11vh, 100px); }
+            .timer-digits { font-size: clamp(3rem, 12vw, 4.5rem); }
+            .curtain-panel.left .gold-cord { transform: translate(60px, 300px) scale(0.8); }
+            .curtain-panel.right .gold-cord { transform: translate(30px, 300px) scale(0.8); }
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen">
+
+<section id="welcome-screen" class="screen screen-active welcome-stage flex flex-col items-center justify-center px-4 py-14 overflow-hidden text-center">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+        <span class="absolute left-[18%] top-[20%] text-pink-300 text-2xl heart-float">♥</span>
+        <span class="absolute right-[17%] top-[28%] text-pink-300 text-xl heart-float" style="animation-delay:-1s">♥</span>
+        <span class="absolute left-[23%] bottom-[22%] text-pink-200 text-3xl heart-float" style="animation-delay:-2s">✦</span>
+        <span class="absolute right-[22%] bottom-[18%] text-pink-300 text-2xl heart-float" style="animation-delay:-.5s">♥</span>
+    </div>
+
+    <div class="relative z-10 w-full max-w-3xl">
+        <div class="mb-4 text-pink-500 text-3xl heart-float" aria-hidden="true">♡</div>
+        <!-- Texto con padding ajustado -->
+        <p class="font-romantic text-2xl sm:text-3xl text-pink-700 mb-2 pt-10">Un pequeño regalo para ti</p>
+        <h1 class="font-romantic text-5xl sm:text-7xl text-pink-800 leading-tight drop-shadow-sm">Hola, mi manzanita hermosa...</h1>
+        <p class="font-romantic text-2xl sm:text-3xl text-pink-700 leading-snug mt-4 max-w-2xl mx-auto">
+            Este proyecto era un poco más grande, pero aun así quise presentártelo.<br class="hidden sm:block">
+            Espero que te guste...
+        </p>
+        <p class="font-romantic text-2xl sm:text-3xl text-pink-600 mt-4 mb-10">13 días pensando en ti ~</p>
+
+        <!-- Temporizador Minimalista -->
+        <div class="my-10">
+            <p class="font-romantic text-2xl sm:text-3xl text-pink-600 mb-2">Faltan:</p>
+            <div id="timer-display" class="timer-digits font-romantic text-6xl sm:text-8xl text-pink-700 tracking-wide tabular-nums drop-shadow-sm" role="timer" aria-live="off">00d 00:00:00</div>
+            <p id="timer-caption" class="text-pink-600 mt-2 font-medium text-lg">Para una fecha especial...</p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mt-10">
+            <button type="button" onclick="abrirPrevisualizacion()" class="primary-btn text-white rounded-full px-7 py-3.5 text-xl font-bold w-full sm:w-auto">
+                <i class="fa-regular fa-eye mr-2"></i> Previsualizar
+            </button>
+            <button id="btn-enter" type="button" onclick="entrarPaginaPrincipal()" disabled class="primary-btn text-white rounded-full px-8 py-3.5 text-xl font-bold w-full sm:w-auto" aria-describedby="entry-note">
+                <i id="entry-icon" class="fa-solid fa-lock mr-2"></i><span id="entry-label">Entrar</span>
+            </button>
+        </div>
+        <p id="entry-note" class="text-sm text-pink-700/70 mt-4 font-semibold"><i class="fa-regular fa-calendar mr-1"></i> Disponible el 14 de octubre de 2026</p>
+        <p id="entry-status" class="sr-only" aria-live="polite"></p>
+    </div>
+
+    <!-- Botón de música global -->
+    <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-7 z-[60]">
+        <button id="music-btn" type="button" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-pink-500 text-white shadow-lg music-pulse hover:bg-pink-600 transition" onclick="toggleMusic()" aria-label="Reproducir música" title="Música">
+            <i id="music-icon" class="fa-solid fa-music text-xl"></i>
+        </button>
+    </div>
+</section>
+
+<section id="preview-screen" class="screen screen-hidden paper-bg flex items-center justify-center px-5 py-12">
+    <div class="soft-card rounded-[2rem] w-full max-w-2xl p-7 sm:p-12 text-center relative z-10">
+        <div class="text-pink-400 text-4xl mb-5" aria-hidden="true"><i class="fa-solid fa-heart"></i></div>
+        <p class="font-romantic text-2xl text-pink-600">Una pequeña pausa...</p>
+        <h2 class="font-romantic text-5xl sm:text-7xl text-pink-700 leading-tight mt-2">No te desesperes,<br>Morchi 💖</h2>
+        <p class="text-pink-900/75 text-lg sm:text-xl mt-6 max-w-lg mx-auto">Hay cosas bonitas que merecen su momento.</p>
+        <div class="my-8 flex items-center justify-center gap-3 text-pink-400" aria-hidden="true"><span class="w-12 h-px bg-pink-300"></span>♡<span class="w-12 h-px bg-pink-300"></span></div>
+        <button type="button" onclick="volverBienvenida()" class="secondary-btn rounded-full px-7 py-3 text-xl font-bold text-pink-700"><i class="fa-solid fa-arrow-left mr-2"></i> Volver a la bienvenida</button>
+    </div>
+</section>
+
+<section id="main-screen" class="screen screen-hidden paper-bg">
+
+    <!-- Contenedor del telón -->
+    <div class="curtain-container" aria-hidden="true">
+        <div class="stage-light left"></div>
+        <div class="stage-light right"></div>
+
+        <!-- Cortina Izquierda Cerrada -->
+        <div class="curtain-panel left">
+            <svg viewBox="0 0 240 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="leftVelvet" x1="0" x2="1"><stop stop-color="#9d174d"/><stop offset=".28" stop-color="#db2777"/><stop offset=".58" stop-color="#f472b6"/><stop offset=".8" stop-color="#be185d"/><stop offset="1" stop-color="#831843"/></linearGradient></defs>
+                <path d="M0 0H240V900H0Z" fill="url(#leftVelvet)"/>
+                <path d="M32 0C70 180 30 330 79 480S45 730 70 900" fill="none" stroke="#fbcfe8" stroke-opacity=".35" stroke-width="5"/>
+                <path d="M112 0C146 180 103 340 135 500S105 740 124 900" fill="none" stroke="#831843" stroke-opacity=".4" stroke-width="12"/>
+                <path d="M0 0H240L225 45C170 70 82 35 0 72Z" fill="#f472b6"/>
+                <!-- Cordón Dorado Izquierdo -->
+                <g class="gold-cord" transform="translate(130, 350)">
+                    <path d="M-50,-350 Q20,0 20,40" fill="none" stroke="#f8d9a0" stroke-width="4"/>
+                    <path d="M20,40 Q40,60 10,80" fill="none" stroke="#f8d9a0" stroke-width="3"/>
+                    <circle cx="20" cy="40" r="8" fill="#d99a3d"/>
+                    <path d="M15,46 L10,80 M20,48 L20,85 M25,46 L30,80" stroke="#f5c66d" stroke-width="2"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Cortina Derecha Cerrada -->
+        <div class="curtain-panel right">
+            <svg viewBox="0 0 240 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs><linearGradient id="rightVelvet" x1="0" x2="1"><stop stop-color="#831843"/><stop offset=".2" stop-color="#be185d"/><stop offset=".48" stop-color="#f472b6"/><stop offset=".72" stop-color="#db2777"/><stop offset="1" stop-color="#9d174d"/></linearGradient></defs>
+                <path d="M0 0H240V900H0Z" fill="url(#rightVelvet)"/>
+                <path d="M208 0C170 180 210 330 161 480S195 730 170 900" fill="none" stroke="#fbcfe8" stroke-opacity=".35" stroke-width="5"/>
+                <path d="M128 0C94 180 137 340 105 500S135 740 116 900" fill="none" stroke="#831843" stroke-opacity=".4" stroke-width="12"/>
+                <path d="M0 0H240V72C158 35 70 70 15 45Z" fill="#f472b6"/>
+                <!-- Cordón Dorado Derecho -->
+                <g class="gold-cord" transform="translate(110, 350)">
+                    <path d="M50,-350 Q-20,0 -20,40" fill="none" stroke="#f8d9a0" stroke-width="4"/>
+                    <path d="M-20,40 Q-40,60 -10,80" fill="none" stroke="#f8d9a0" stroke-width="3"/>
+                    <circle cx="-20" cy="40" r="8" fill="#d99a3d"/>
+                    <path d="M-15,46 L-10,80 M-20,48 L-20,85 M-25,46 L-30,80" stroke="#f5c66d" stroke-width="2"/>
+                </g>
+            </svg>
+        </div>
+
+        <!-- Cenefa -->
+        <div class="curtain-valance">
+            <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="valanceVelvet" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#be185d"/><stop offset=".48" stop-color="#ec4899"/><stop offset="1" stop-color="#9d174d"/></linearGradient>
+                    <linearGradient id="valanceFold" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#831843"/><stop offset=".18" stop-color="#f472b6"/><stop offset=".35" stop-color="#be185d"/><stop offset=".52" stop-color="#f9a8d4"/><stop offset=".7" stop-color="#be185d"/><stop offset=".86" stop-color="#f472b6"/><stop offset="1" stop-color="#831843"/></linearGradient>
+                </defs>
+                <path d="M0 0H1440V28C1280 32 1245 122 1080 111C930 101 920 60 720 74C520 60 510 101 360 111C195 122 160 32 0 28Z" fill="url(#valanceVelvet)"/>
+                <path d="M0 0H1440V28C1280 32 1245 122 1080 111C930 101 920 60 720 74C520 60 510 101 360 111C195 122 160 32 0 28Z" fill="url(#valanceFold)" opacity=".48"/>
+                <path d="M0 29C160 34 195 128 360 117C510 107 520 67 720 81C920 67 930 107 1080 117C1245 128 1280 34 1440 29" class="valance-gold"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Contenido desplazable -->
+    <main class="relative z-10 w-full max-w-3xl mx-auto px-5 pt-32 pb-16 sm:pt-40">
+        <header class="text-center mb-12 sm:mb-16">
+            <div class="text-pink-400 text-3xl mb-3" aria-hidden="true">♡</div>
+            <p class="font-romantic text-2xl text-pink-600">Desliza para descubrir...</p>
+            <h2 class="font-romantic text-4xl sm:text-6xl leading-relaxed text-pink-800 mt-2">Para ti, mi vida hermosa</h2>
+            <p class="text-pink-900/70 text-lg mt-3">Cada carta guarda un poema y cada uno es solamente tuyo.</p>
+        </header>
+        <section id="poems-container" class="flex flex-col gap-4 relative z-20" aria-label="Cartas y poemas"></section>
+        <footer class="text-center mt-14 font-romantic text-2xl sm:text-3xl text-pink-600">Gracias por estar aquí ♡</footer>
+        <div class="text-center mt-7 relative z-20">
+            <button type="button" onclick="volverBienvenida()" class="secondary-btn rounded-full px-5 py-2.5 text-pink-700"><i class="fa-solid fa-arrow-left mr-2"></i> Volver a la bienvenida</button>
+        </div>
+    </main>
+</section>
+
+<audio id="bg-music" loop preload="none"></audio>
+
+<script>
+    const targetDate = new Date(2026, 9, 14, 0, 0, 0).getTime();
+    const timerElement = document.getElementById('timer-display');
+    const timerCaption = document.getElementById('timer-caption');
+    const enterButton = document.getElementById('btn-enter');
+    const entryIcon = document.getElementById('entry-icon');
+    const entryLabel = document.getElementById('entry-label');
+    const entryNote = document.getElementById('entry-note');
+    let timerInterval;
+
+    function updateTimer() {
+        const distance = targetDate - Date.now();
+        if (distance <= 0) {
+            timerElement.textContent = '¡Llegó el día!';
+            timerCaption.textContent = 'Hoy comienza una parte más de nuestra historia.';
+            enterButton.disabled = false;
+            entryIcon.className = 'fa-solid fa-heart mr-2';
+            entryLabel.textContent = 'Entrar';
+            entryNote.innerHTML = '<i class="fa-solid fa-unlock mr-1"></i> Ya puedes descubrir tus cartas';
+            document.getElementById('entry-status').textContent = 'La página principal ya está disponible.';
+            return;
+        }
+        const days = Math.floor(distance / 86400000);
+        const hours = Math.floor((distance % 86400000) / 3600000);
+        const minutes = Math.floor((distance % 3600000) / 60000);
+        const seconds = Math.floor((distance % 60000) / 1000);
+        const pad = n => String(n).padStart(2, '0');
+        timerElement.textContent = `${pad(days)}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        enterButton.disabled = true;
+    }
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+
+    function setActiveScreen(screenId) {
+        const screens = ['welcome-screen', 'preview-screen', 'main-screen'];
+        screens.forEach(id => {
+            const element = document.getElementById(id);
+            const active = id === screenId;
+            element.classList.toggle('screen-active', active);
+            element.classList.toggle('screen-hidden', !active);
+            element.setAttribute('aria-hidden', String(!active));
+        });
+        window.scrollTo({ top: 0, behavior: 'auto' });
+
+        // Resetea el estado del telón al cambiar de pantalla
+        if (screenId === 'main-screen') {
+            checkScrollForCurtain();
+        }
+    }
+
+    function abrirPrevisualizacion() { setActiveScreen('preview-screen'); }
+    function volverBienvenida() { setActiveScreen('welcome-screen'); }
+    function entrarPaginaPrincipal() {
+        if (Date.now() < targetDate) { updateTimer(); return; }
+        setActiveScreen('main-screen');
+    }
+
+    // Lógica del telón controlada por el scroll en el main-screen
+    const mainScreen = document.getElementById('main-screen');
+    function checkScrollForCurtain() {
+        if (mainScreen.classList.contains('screen-active')) {
+            if (window.scrollY > 30) { // Se abre al bajar un poco
+                mainScreen.classList.add('curtains-open');
+            } else {
+                mainScreen.classList.remove('curtains-open');
+            }
+        }
+    }
+    window.addEventListener('scroll', checkScrollForCurtain);
+
+    const bgMusic = document.getElementById('bg-music');
+    const musicBtn = document.getElementById('music-btn');
+    const musicIcon = document.getElementById('music-icon');
+    async function toggleMusic() {
+        if (!bgMusic.querySelector('source') && !bgMusic.getAttribute('src')) {
+            alert('Todavía falta añadir el archivo de música al proyecto.');
+            return;
+        }
+        if (bgMusic.paused) {
+            try {
+                await bgMusic.play();
+                musicIcon.className = 'fa-solid fa-pause text-xl';
+                musicBtn.classList.remove('music-pulse');
+            } catch (error) { console.error('Error audio:', error); }
+        } else {
+            bgMusic.pause();
+            musicIcon.className = 'fa-solid fa-music text-xl';
+            musicBtn.classList.add('music-pulse');
+        }
+    }
+
+    const poemas = [
+        'Hoy estuve pensando en ti,\n' +
+        'en lo mucho que te admiro\n' +
+        'en que sin ti no vivo, \n' +
+        'y si es que vivo, sentido no miro\n' +
+        'puesto que tuyo yo siempre eh sido\n' +
+        'Y es que no concivo,\n' +
+        'sin ti yo estar vivo,\n' +
+        'ya que contigo el tiempo no mido\n' +
+        'ya que a tu lado, solo lo mejor exhibo.\n' +
+        '\n' +
+        'Mi manzanita hermosa,\n' +
+        'cada que mi cuerpo rosas\n' +
+        'dulces sensaciones en mi dejas,\n' +
+        'desde tu voz en mis orejas\n' +
+        'hasta tu calor que quema mis quejas\n' +
+        '\n' +
+        'cada instante a tu lado\n' +
+        'cada segundo entre tus brazos\n' +
+        'es algo por lo que daría todo mi pasado\n' +
+        'para en tus manos dejar mis lazos\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        'bien escrito:\n' +
+        '\n' +
+        '\n' +
+        'Hoy estuve pensando en ti,\n' +
+        'en lo mucho que te admiro,\n' +
+        'en que sin ti no vivo,\n' +
+        'y si es que vivo, sentido no miro,\n' +
+        'puesto que tuyo yo siempre he sido.\n' +
+        'Y es que no concibo,\n' +
+        'sin ti yo estar vivo,\n' +
+        'ya que contigo el tiempo no mido,\n' +
+        'ya que a tu lado, solo lo mejor exhibo.\n' +
+        '\n' +
+        'Mi manzanita hermosa,\n' +
+        'cada vez que mi cuerpo rozas,\n' +
+        'dulces sensaciones en mí dejas,\n' +
+        'desde tu voz en mis orejas,\n' +
+        'hasta tu calor que quema mis quejas.\n' +
+        '\n' +
+        'Cada instante a tu lado,\n' +
+        'cada segundo entre tus brazos,\n' +
+        'es algo por lo que daría todo mi pasado,\n' +
+        'para quedarme a vivir en tus abrazos.\n' +
+        '\n',
+        'Entre la penumbra de la vida\n' +
+        'eres la luz que me anima\n' +
+        'entre la sombra de la huida\n' +
+        'tu voz es mi salida\n' +
+        '\n' +
+        'oh, corazón pedir perdón no debes\n' +
+        'pues entre lo que quisieres\n' +
+        'solo la mitad consigo darte\n' +
+        'sin embargo, implacable eres\n' +
+        'pues permaneces a mi lado\n' +
+        'aunque para acompañarte,\n' +
+        'tan solo tenga mi arte\n' +
+        'y si bien no es arte,\n' +
+        'siempre muero por besarte,\n' +
+        'oh amada mía, entre tantos seres,\n' +
+        'tan solo tú eres mi alegría.\n' +
+        '\n' +
+        'porfavor, disculparte no debes,\n' +
+        'entre todos los placeres\n' +
+        'con ninguno te compararía,\n' +
+        'pues de ti no me alejaría\n' +
+        'unicamente deseo mirarte,\n' +
+        'abrazarte y apretarte, \n' +
+        'sentirte distante mi alma parte,\n' +
+        'y si bien de mi no esperes\n' +
+        'más que el amarte y quererte,\n' +
+        'si tu deseo fuese más, sentirte mal no debes\n' +
+        'tú molestarme no puedes.\n' +
+        '\n' +
+        'Amarte jamás duele los jueves\n' +
+        'por eso amada mía, cada día\n' +
+        'me anima escuchar tu melodía,\n' +
+        'pedir perdón no debes,\n' +
+        'tu actuar alimenta mi poesía,\n' +
+        'tu calor inyecta en mí alegría.\n' +
+        '\n' +
+        'Que quede claro en estos versos\n' +
+        'sentirte mal no debes,\n' +
+        'mucho menos los días jueves\n' +
+        'pues tu amor es mi vida.\n' +
+        'dejo claro que mi deber es amarte\n' +
+        'y mi intención es explicarte,\n' +
+        'a travez de mis letras,\n' +
+        'que por más que comprometas\n' +
+        'pedir perdón no debes\n' +
+        'pues el amor se equivoca\n' +
+        'pero lo nuestro no se toca\n' +
+        'confundirte siempre puedes\n' +
+        'pero allá, donde nos encontramos\n' +
+        'eso no importa, pues tú no estas loca\n' +
+        'sabes bien que nos amamos.\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        'bien escrito:\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        '\n' +
+        'Entre la penumbra de la vida,\n' +
+        'eres la luz que me anima;\n' +
+        'entre la sombra de la huida,\n' +
+        'tu voz es mi salida.\n' +
+        '\n' +
+        'Oh, corazón, pedir perdón no debes,\n' +
+        'pues entre lo que quisieras,\n' +
+        'solo la mitad consigo darte;\n' +
+        'sin embargo, implacable eres,\n' +
+        'pues permaneces a mi lado,\n' +
+        'aunque para acompañarte,\n' +
+        'tan solo tenga mi arte.\n' +
+        'Y, si bien no es arte,\n' +
+        'siempre muero por besarte.\n' +
+        'Oh, amada mía, entre tantos seres,\n' +
+        'tan solo tú eres mi alegría.\n' +
+        '\n' +
+        'Por favor, disculparte no debes;\n' +
+        'entre todos los placeres,\n' +
+        'con ninguno te compararía,\n' +
+        'pues de ti no me alejaría.\n' +
+        'Únicamente deseo mirarte,\n' +
+        'abrazarte y apretarte;\n' +
+        'sentirte distante, mi alma parte,\n' +
+        'y, si bien de mí no esperes\n' +
+        'más que el amarte y quererte,\n' +
+        'si tu deseo fuese más, sentirte mal no debes.\n' +
+        'Tú molestarme no puedes.\n' +
+        '\n' +
+        'Amarte jamás duele los jueves,\n' +
+        'por eso, amada mía, cada día\n' +
+        'me anima escuchar tu melodía.\n' +
+        'Pedir perdón no debes,\n' +
+        'tu actuar alimenta mi poesía,\n' +
+        'tu calor inyecta en mí alegría.\n' +
+        '\n' +
+        'Que quede claro en estos versos:\n' +
+        'sentirte mal no debes,\n' +
+        'mucho menos los días jueves,\n' +
+        'pues tu amor es mi vida.\n' +
+        'Dejo claro que mi deber es amarte\n' +
+        'y mi intención es explicarte,\n' +
+        'a través de mis letras,\n' +
+        'que, por más que comprometas,\n' +
+        'pedir perdón no debes,\n' +
+        'pues el amor se equivoca,\n' +
+        'pero lo nuestro no se toca.\n' +
+        'Confundirte siempre puedes,\n' +
+        'pero allá, donde nos encontramos,\n' +
+        'eso no importa, pues tú no estás loca;\n' +
+        'sabes bien que nos amamos.\n' +
+        '\n',
+        'Entre tus finos labios,\n' +
+        'que el dolor extinguen\n' +
+        'y sin perdón mi vida exigen,\n' +
+        'fácil es perder mis pasos,\n' +
+        'imposible intentar meter mis brazos,\n' +
+        'pues de enfrentarlos soy incapaz.\n' +
+        'Y podrá sonar burdaz,\n' +
+        'pero, para ser muy justos,\n' +
+        'en ellos podría vivir por lustros.\n' +
+        '\n' +
+        'Reflejándome en tus hermosos faros,\n' +
+        'los que de mi vida son amos,\n' +
+        'aquellos que, como el espacio, me envuelven\n' +
+        'y la mirada me devuelven,\n' +
+        'quisiera dejar que en mí gobiernen;\n' +
+        'que mis manos, al apretar\n' +
+        'aquellas hermosas mejillas,\n' +
+        'se fundiesen cual arcillas.\n' +
+        'Que entre los placeres de la vida,\n' +
+        'sentir tus olores y alegrías\n' +
+        'es aquello que me aviva.\n' +
+        '\n' +
+        'Espero los micrófonos a sus costados\n' +
+        'vibren de fragante alegría\n' +
+        'al compás de mi poesía;\n' +
+        'que tus ojos, cual estrellas,\n' +
+        'se inunden de lágrimas bellas\n' +
+        'al sentir mi ortografía.\n' +
+        'Cada uno de tus sentidos,\n' +
+        'oh, princesita mía,\n' +
+        '\n' +
+        'así como guías mis pasos,\n' +
+        'quiero llenar tus brazos\n' +
+        'de implacables melodías,\n' +
+        'de infinitas poesías.\n' +
+        'Quisiera llenar tu cuerpo\n' +
+        'con aquellas sensaciones\n' +
+        'que hacen vibrar corazones.\n',
+        'Sobre ríos uniformes\n' +
+        'navegan los informes,\n' +
+        'que en desgracias sumen,\n' +
+        'pues la vida resumen.\n' +
+        '\n' +
+        'Registran las acciones,\n' +
+        'logros y conversaciones;\n' +
+        'también guardan divisiones,\n' +
+        'traiciones y adicciones.\n' +
+        '\n' +
+        'Pero su alcance limitan,\n' +
+        'puesto que en ellos\n' +
+        'no hay más que destellos,\n' +
+        'los cuales, aunque implacables,\n' +
+        'son incluso despreciables.\n' +
+        'Pues hay algo que evitan,\n' +
+        'aquello que da sentido\n' +
+        'a los empedrados caminos\n' +
+        'que avanzamos erguidos.\n' +
+        '\n' +
+        'Entre sencillas tramas\n' +
+        'encierran a los dramas,\n' +
+        'pero entre sus palabras\n' +
+        'olvidan aquellas brasas;\n' +
+        'los momentos tan pequeños\n' +
+        'que avivan nuestros sueños.\n' +
+        '\n' +
+        'Quienes llevan nuestros pasos\n' +
+        'son las grandes coincidencias\n' +
+        'que marcaron la existencia\n' +
+        'de todos los seres vivos,\n' +
+        'contenidas entre llantos\n' +
+        'o liberadas entre gritos.\n' +
+        '\n' +
+        'Pues nos guían nuestros sueños\n' +
+        'y, si bien, tampoco somos dueños,\n' +
+        'yo siempre he soñado\n' +
+        'con existir a tu lado\n' +
+        'y disfrutar de nuestros lazos\n' +
+        'en el calor de tus brazos;\n' +
+        'pues lo mejor de estos ratos\n' +
+        'es vivir de tus abrazos.\n' +
+        '\n' +
+        'De escribirte una canción\n' +
+        'muere de ganas mi razón;\n' +
+        'en esta vida, corazón,\n' +
+        'no hagas trizas mi ilusión,\n' +
+        'se parte de cada oración.\n' +
+        '\n' +
+        'Pues este es mi deseo:\n' +
+        'dedicarte mil y un besos;\n' +
+        'los mantendré presos\n' +
+        'entre todos mis versos,\n' +
+        'hasta que tus oídos alcancen\n' +
+        'o en tus pupilas resalten.\n' +
+        '\n' +
+        'Ya que lo que tenemos\n' +
+        'resumirlo es imposible,\n' +
+        'pues juntos existimos;\n' +
+        'cada día nos amamos,\n' +
+        'compartimos poesía\n' +
+        'y abrazamos la alegría.\n' +
+        '\n' +
+        'Aquello que nos enlaza\n' +
+        'no cabría en una taza,\n' +
+        'pues, sin lugar a dudas,\n' +
+        'vernos con almas desnudas\n' +
+        'y sabernos ambos propios\n' +
+        'nos genera innumerables gozos.\n' +
+        '\n' +
+        'Así, cada día pintamos los trazos\n' +
+        'que, entre cada uno de tus abrazos,\n' +
+        'aseguran en mí los nudos\n' +
+        'que aprietan nuestros lazos\n' +
+        'y hacen mis días tuyos.\n',
+        'La gente teme al espacio\n' +
+        'no por ir despacio,\n' +
+        'sino por su inmensidad\n' +
+        'que, por incomprensión,\n' +
+        'confundimos con maldad.\n' +
+        '\n' +
+        'Pero no hay peor maldad\n' +
+        'que evitar algo hermoso\n' +
+        'por un miedo algo soso,\n' +
+        'ya que entre la inmensidad\n' +
+        'resaltan las estrellas\n' +
+        'y vaya que son bellas.\n' +
+        '\n' +
+        'Tú no eres una estrella,\n' +
+        'pero cargas dos de ellas\n' +
+        'y entre sus destellos\n' +
+        'se apartan mis miedos.\n' +
+        '\n' +
+        'Y si bien son como estrellas,\n' +
+        'pues incesantes brillan,\n' +
+        'son indudablemente profundos,\n' +
+        'analíticos, atrayentes y agudos.\n' +
+        '\n' +
+        'Así, tal vez no son estrellas\n' +
+        'y son fábricas de ellas;\n' +
+        'en ese caso, posees nebulosas\n' +
+        'que son bellas y asombrosas;\n' +
+        'con su gravedad me inspiras\n' +
+        'a mirarte todos los días.\n' +
+        '\n' +
+        'Entre sus luces crías\n' +
+        'en cantidades astronómicas\n' +
+        'incesantes pensamientos\n' +
+        'que engloban sentimientos,\n' +
+        'todo lo que en tu cabeza pesa.\n' +
+        'Así, no será sorpresa\n' +
+        'que yo observe las líricas\n' +
+        'y analice sus métricas.\n' +
+        '\n' +
+        'Entonces palabras me tiras\n' +
+        'y con tu inmensidad me miras,\n' +
+        'pero no importa qué digas,\n' +
+        'pues ya sé lo que litigas.\n' +
+        'Oh, corazón, de mí no te rías,\n' +
+        'pues no importa que sea a migas.\n' +
+        '\n' +
+        'Ya que entenderte intento\n' +
+        'y no descanso ni un momento,\n' +
+        'pues entre el entendimiento\n' +
+        'no existe un solo instante\n' +
+        'en que de ti sea distante.\n' +
+        '\n' +
+        'Entre tus ojos me pierdo\n' +
+        'pues me encanta hacerlo;\n' +
+        'no existe mejor don\n' +
+        'que a tu corazón poder llegar,\n' +
+        'logrando el espacio atravesar.\n',
+        'Hay seres que lo bello\n' +
+        'observan con recelo,\n' +
+        'pues fríos cual hielo\n' +
+        'la belleza no aguantan.\n' +
+        '\n' +
+        'E implacables cantan:\n' +
+        '\n' +
+        '«Aquí los feos mandan\n' +
+        'y nada hermoso levantan,\n' +
+        'lo bello simplemente no existe,\n' +
+        'aunque aquello te ponga triste».\n' +
+        '\n' +
+        'Y, ante semejante melodía,\n' +
+        'solo pienso: ¡qué tontería!,\n' +
+        'pues cada que te nombran\n' +
+        'mis sentidos se asombran;\n' +
+        'secuestras mis pensamientos\n' +
+        'durante inmensos momentos.\n' +
+        '\n' +
+        'Y, sin embargo, el escucharte\n' +
+        'también lo considero arte;\n' +
+        'cuando tus labios me buscan,\n' +
+        'emocionados, mi nombre anuncian,\n' +
+        'entonces, al encontrarme\n' +
+        'entre besos, buscan encerrarme.\n' +
+        '\n' +
+        'Y yo solo puedo estar perplejo\n' +
+        'ante tan hermoso cortejo.\n' +
+        'Así pues, escrito dejo:\n' +
+        'la belleza no es del hombre,\n' +
+        'pero qué hermoso es tu nombre.\n' +
+        '\n' +
+        'Pues, al pronunciarlo,\n' +
+        'no son simples palabras,\n' +
+        'sino preciosas melodías\n' +
+        'que podría cantar días.\n' +
+        '\n' +
+        'Adilene, Adilene, Adilene,\n' +
+        'cada día quisiera cantarte;\n' +
+        'y en mil estrofas mencionarte\n' +
+        'o mil poemas al oído recitarte.\n' +
+        '\n' +
+        'Pero con tan solo nombrarte,\n' +
+        'yo ya muero por besarte.\n' +
+        'Un secreto quiero contarte\n' +
+        'y es que por siempre quiero amarte.\n',
+        'Un lazo requiere constancia\n' +
+        'para mantener el sentimiento,\n' +
+        'aunque haya gran distancia.\n' +
+        '\n' +
+        'Aún lejos, siempre te siento,\n' +
+        'pues de mi vida eres un faro,\n' +
+        'y aun en pleno hundimiento,\n' +
+        '\n' +
+        'por más que parezca raro,\n' +
+        'el solo pensar en tus manos\n' +
+        'a mi mente brinda amparo.\n' +
+        '\n' +
+        'Y así, podrían pasar años,\n' +
+        'pero sé que delante está la costa,\n' +
+        'y en ella, me esperan tus abrazos.\n' +
+        '\n' +
+        'Y yo aguantaré hasta aquella hora;\n' +
+        'entonces, el naufragio no es el fin,\n' +
+        'pues yo, sin duda, llegaré a la boda.\n' +
+        '\n' +
+        'Llegaré y te veré en el jardín,\n' +
+        'y cuando estemos juntos, mi amor,\n' +
+        'nada importará de lo que viví,\n' +
+        '\n' +
+        'pues todo lo curarás con tu calor.\n',
+        'Cada día, captamos sensaciones\n' +
+        'que en el aire perdidas vuelan,\n' +
+        'y entre ellas, miles de olores\n' +
+        'en nuestros sentidos resuenan.\n' +
+        '\n' +
+        'Algunos de ellos son imperceptibles,\n' +
+        'otros simplemente imperdibles,\n' +
+        'como los que de ti provienen\n' +
+        'e implacables, mi atención retienen.\n' +
+        '\n' +
+        'Pues gracias a tu dulce aroma,\n' +
+        'el mundo girando se mantiene,\n' +
+        'y las abejas trabajo tienen;\n' +
+        'gracias a ti las plantas asoman.\n' +
+        '\n' +
+        'Los ríos fluyen y los peces vuelan,\n' +
+        'las aves nadan y los animales cantan,\n' +
+        'los autos avanzan y el sol brilla,\n' +
+        'pues a cualquier otro olor humilla.\n' +
+        '\n' +
+        'Tienes la fórmula precisa\n' +
+        'que mi mundo necesitaba,\n' +
+        'y aunque perdido estaba,\n' +
+        'yo ya encontré mi premisa.\n' +
+        '\n' +
+        'Y es que con tu hermosa esencia\n' +
+        'atraes toda mi presencia,\n' +
+        'mi manzanita hermosa,\n' +
+        'con color de mariposa.\n' +
+        '\n' +
+        'Así pues, adicto me declaro\n' +
+        'a aquel sabor que con descaro\n' +
+        'en mis labios siempre dejas,\n' +
+        'con el olor que solo tú manejas.\n',
+        'Cuando el sol nuestras pieles quema,\n' +
+        'la sombra en alivio se convierte;\n' +
+        'vivimos atrapados sobre este esquema,\n' +
+        '\n' +
+        'pues el exceso en nuestra contra arremete,\n' +
+        'ya que, al revés, nos hundimos en penumbra\n' +
+        'cuando la sombra a su exceso nos somete.\n' +
+        '\n' +
+        'Y aunque uno a lo malo se acostumbra,\n' +
+        'bueno saber que existe el equilibrio,\n' +
+        'pues es algo bello que la vida alumbra.\n' +
+        '\n' +
+        'Y sí, todo aquello parece un delirio,\n' +
+        'pero pongo cual ejemplo aquel eclipse\n' +
+        'en que tus manos acudieron en mi auxilio.\n' +
+        '\n' +
+        'Pues aunque tal vez no me encontraba triste,\n' +
+        'bien tampoco estaba, si requieres respuesta;\n' +
+        'me encontraba en el centro de una elipse.\n' +
+        '\n' +
+        'Y desde aquel punto encontré una apuesta:\n' +
+        'sin dudar, entre tus dedos buscar mi camino.\n' +
+        'Entonces, corazón, te hice una propuesta:\n' +
+        '\n' +
+        '«Sé mi novia, pues es nuestro destino;\n' +
+        'junta tus labios con los míos, te pido,\n' +
+        'sellemos juntos nuestro lazo divino».\n' +
+        '\n' +
+        'Tal vez así no fue, pero no lo olvido,\n' +
+        'pues juntos nuestro primer beso vivimos,\n' +
+        'y entonces nuestro amor dimos por nacido.\n' +
+        '\n' +
+        'Claro, ahora sé que al caos no vencimos,\n' +
+        'porque de alejarse del sol no se trata,\n' +
+        'pero recorrer el camino juntos elegimos,\n' +
+        '\n' +
+        'pues, sin duda, era la decisión más sensata,\n' +
+        'ya que eso es el equilibrio, no la ausencia,\n' +
+        'sino encontrar lo que el sentimiento dilata,\n' +
+        '\n' +
+        'y esa, corazón, es sin duda nuestra esencia.\n',
+        'Quiero hablarte, corazón,\n' +
+        'de aquello con que domas mi razón.\n' +
+        'Entonces, manzanita bonita,\n' +
+        'déjame explicarte, porque es fácil amarte.\n' +
+        '\n' +
+        'En primera, al curvar tus labios hacia arriba,\n' +
+        'haces que todo a tu alrededor sonría;\n' +
+        'los días son más brillantes cuando muestras tus encías.\n' +
+        '\n' +
+        'En segunda, el sabor alegre que en mí dejas\n' +
+        'cuando permites que bese tus mejillas,\n' +
+        'o cuando te resistes implacable mientras ríes,\n' +
+        'pues sabes que no pararé hasta el besito dejarte.\n' +
+        '\n' +
+        'En tercera, el dulce aroma que desprendes,\n' +
+        'pues, cual flor en primavera, mi atención te llevas.\n' +
+        'Olerte podría todo el día, de verdad, no es mentira,\n' +
+        'pues aquel aroma es paz y sintonía.\n' +
+        '\n' +
+        'Como cuarta yo pondría el calor de tus abrazos,\n' +
+        'pues, cual ardiente sol, calma el frío de mi vida\n' +
+        'y me da la energía para el mundo lograr conquistar.\n' +
+        '\n' +
+        'En la quinta, sin lugar a dudas, debo mencionar\n' +
+        'aquella emoción al verte llegar, ya que, sin dudar,\n' +
+        'a tu lado me insta a quedarme\n' +
+        'y no es por hacer alarde.\n' +
+        '\n' +
+        'Pero la sexta es, sin duda, caminar a tu lado\n' +
+        'como dos seres que son uno mismo;\n' +
+        'andar contigo sin soltarnos\n' +
+        'le da sentido a todo, pues ya nada más importa.\n' +
+        '\n' +
+        'Y la séptima, sin duda, es que eres quien me ayuda.\n' +
+        'Cuando no quiero ver a nadie, siempre acudes en mi auxilio,\n' +
+        'como una heroína que solo por mí acude.\n' +
+        '\n' +
+        'Como octava, no dudo en poner\n' +
+        'el poder que transmites cuando tu atención en un juego centras\n' +
+        'y todo rojo golpeas y, como buena veterana,\n' +
+        'a todo el equipo carreas.\n' +
+        '\n' +
+        'La novena, manzanita, estoy seguro que sería\n' +
+        'cuando finges molestia solo para mi atención llamar,\n' +
+        'porque no es que no me dé cuenta;\n' +
+        'de hecho, me hace emocionar.\n' +
+        '\n' +
+        'Y como décima, creo que debo mencionar\n' +
+        'que no pondré una décima razón, pues de solo pensar en ti, corazón,\n' +
+        'veo que no las necesito,\n' +
+        'pues nunca podría esta lista terminar.\n',
+        'Para ti, Adilene: este último sobre guarda algo que quería decirte cuando llegara nuestro día.'
+    ];
+
+    const poemsContainer = document.getElementById('poems-container');
+    const anniversaryReached = () => Date.now() >= targetDate;
+
+    poemas.forEach((poema, index) => {
+        const day = index + 1;
+        const locked = day === 13 && !anniversaryReached();
+        const wrapper = document.createElement('article');
+        wrapper.className = 'poem-wrapper';
+
+        const header = document.createElement('button');
+        header.type = 'button';
+        header.className = 'poem-header w-full flex items-center justify-between gap-4 p-4 sm:p-5 text-left';
+        header.setAttribute('aria-expanded', 'false');
+        header.innerHTML = `
+        <span class="flex items-center gap-3 font-romantic text-2xl sm:text-3xl text-pink-800">
+          <i class="fa-solid ${locked ? 'fa-lock' : 'fa-envelope-open-text'} text-pink-500 text-xl" aria-hidden="true"></i>
+          Día ${day}
+        </span>
+        <i class="chevron fa-solid fa-chevron-down text-pink-600 transition-transform duration-300" aria-hidden="true"></i>`;
+
+        const content = document.createElement('div');
+        content.className = 'poem-content';
+        const inner = document.createElement('div');
+        inner.className = 'poem-content-inner';
+        const paragraph = document.createElement('p');
+        paragraph.className = 'rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900';
+        paragraph.textContent = locked ? 'Esta carta todavía está esperando su momento. Vuelve el 14 de octubre, Adilene. ♡' : poema;
+        inner.appendChild(paragraph);
+        content.appendChild(inner);
+        wrapper.append(header, content);
+
+        header.addEventListener('click', () => {
+            if (day === 13 && !anniversaryReached()) {
+                wrapper.classList.add('locked-shake');
+                setTimeout(() => wrapper.classList.remove('locked-shake'), 350);
+                return;
+            }
+            const willOpen = !wrapper.classList.contains('open');
+            document.querySelectorAll('.poem-wrapper.open').forEach(openWrapper => {
+                openWrapper.classList.remove('open');
+                openWrapper.querySelector('button').setAttribute('aria-expanded', 'false');
+            });
+            wrapper.classList.toggle('open', willOpen);
+            header.setAttribute('aria-expanded', String(willOpen));
+        });
+        poemsContainer.appendChild(wrapper);
+    });
+</script>
+</body>
+</html>
