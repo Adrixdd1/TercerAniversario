@@ -396,16 +396,70 @@
 
         customTitles = nuevosTitulos;
         nombresRevelados = true;
+
+        // Aquí sí es necesario rediseñar para aplicar los nuevos nombres en los títulos
         renderizarPoemas();
     };
 
     function renderizarPoemas() {
         const poemsContainer = document.getElementById('poems-container');
-        poemsContainer.innerHTML = '';
 
+        // CORRECCIÓN: Si las cartas ya fueron creadas previamente,
+        // no vaciamos todo el contenedor para evitar que se cierren solas.
+        const cartasExistentes = poemsContainer.querySelectorAll('.poem-wrapper');
         const isNoon = Date.now() >= noonDate;
 
-        for (let i = 0; i < 12; i++) {
+        // Si es la primera vez que se renderiza, construimos las 12 cartas
+        if (cartasExistentes.length === 0) {
+            for (let i = 0; i < 12; i++) {
+                const wrapper = document.createElement('article');
+                wrapper.className = 'poem-wrapper';
+                wrapper.dataset.index = i; // Identificador estable para cada carta
+
+                const header = document.createElement('button');
+                header.type = 'button';
+                header.className = 'poem-header w-full flex items-center justify-between gap-4 p-4 sm:p-5 text-left';
+                header.setAttribute('aria-expanded', 'false');
+
+                const content = document.createElement('div');
+                content.className = 'poem-content';
+                const inner = document.createElement('div');
+                inner.className = 'poem-content-inner';
+
+                content.appendChild(inner);
+                wrapper.append(header, content);
+
+                // Controlador de apertura y cierre (Asegura que solo se abra/cierre esta carta)
+                header.addEventListener('click', () => {
+                    // Verificamos estado de bloqueo en tiempo de ejecución
+                    const locked = wrapper.dataset.locked === 'true';
+                    if (locked) {
+                        wrapper.classList.add('locked-shake');
+                        setTimeout(() => wrapper.classList.remove('locked-shake'), 350);
+                        return;
+                    }
+                    const willOpen = !wrapper.classList.contains('open');
+
+                    // Opcional: Si prefieres que las demás se cierren al abrir otra, déjalo.
+                    // Si quieres que varias queden abiertas a la vez, elimina el bloque de abajo.
+                    document.querySelectorAll('.poem-wrapper.open').forEach(openWrapper => {
+                        if (openWrapper !== wrapper) {
+                            openWrapper.classList.remove('open');
+                            openWrapper.querySelector('button').setAttribute('aria-expanded', 'false');
+                        }
+                    });
+
+                    wrapper.classList.toggle('open', willOpen);
+                    header.setAttribute('aria-expanded', String(willOpen));
+                });
+
+                poemsContainer.appendChild(wrapper);
+            }
+        }
+
+        // Actualizamos el contenido dinámico de cada carta sin destruir los elementos DOM
+        const wrappers = poemsContainer.querySelectorAll('.poem-wrapper');
+        wrappers.forEach((wrapper, i) => {
             const numCarta = i + 1;
             let locked = false;
             let lockedMsg = '';
@@ -414,13 +468,11 @@
             let injectForm = false;
 
             if (i < 10) {
-                // Poemas 1 al 10
                 const defaultTitle = `Día ${numCarta}`;
                 tituloRaw = (nombresRevelados && customTitles[i] && customTitles[i] !== '') ? customTitles[i] : defaultTitle;
                 contenidoHtml = `<p class="rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line">${escapeHTML(poemas[i])}</p>`;
             }
             else if (numCarta === 11) {
-                // Carta 11 - Formulario de personalización
                 if (!isNoon) {
                     locked = true;
                     lockedMsg = 'Esta carta se abrirá a las 12:00 PM (mediodía) del 14 de octubre. ♡';
@@ -429,13 +481,11 @@
                     if (nombresRevelados) {
                         contenidoHtml = `<p class="rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line">¡Qué hermosos nombres! Ahora puedes abrir la última carta.</p>`;
                     } else {
-                        // Construimos el formulario dinámicamente mediante DOM para máxima seguridad
                         injectForm = true;
                     }
                 }
             }
             else if (numCarta === 12) {
-                // Carta 12
                 tituloRaw = 'El último poema';
                 if (!nombresRevelados) {
                     locked = true;
@@ -444,6 +494,76 @@
                     contenidoHtml = `<p class="rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line">El último poema no está escrito en esta pantalla, porque no se lee, se escucha.\n\nBúscame para recitártelo yo mismo, mirándote a los ojos. ♡</p>`;
                 }
             }
+
+            // Guardamos el estado de bloqueo en el dataset para validarlo al hacer clic
+            wrapper.dataset.locked = locked;
+
+            const header = wrapper.querySelector('.poem-header');
+            header.innerHTML = `
+            <span class="flex items-center gap-3 font-romantic text-2xl sm:text-3xl text-pink-800">
+              <i class="fa-solid ${locked ? 'fa-lock' : 'fa-envelope-open-text'} text-pink-500 text-xl" aria-hidden="true"></i>
+              ${escapeHTML(tituloRaw)}
+            </span>
+            <i class="chevron fa-solid fa-chevron-down text-pink-600 transition-transform duration-300" aria-hidden="true"></i>`;
+
+            const inner = wrapper.querySelector('.poem-content-inner');
+
+            if (locked) {
+                inner.innerHTML = `<p class="rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line">${escapeHTML(lockedMsg)}</p>`;
+            } else if (injectForm) {
+                // Verificamos si ya existe el formulario para no sobrescribir lo que ella ya esté escribiendo
+                if (!inner.querySelector('input')) {
+                    const formWrapper = document.createElement('div');
+                    formWrapper.className = 'rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-6 text-center';
+
+                    const instr = document.createElement('p');
+                    instr.className = 'font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line mb-4';
+                    instr.textContent = 'Ha llegado el mediodía, y con él, el momento de darle su propio nombre a cada parte de esta historia que te he escrito.';
+                    formWrapper.appendChild(instr);
+
+                    const formDiv = document.createElement('div');
+                    formDiv.className = 'mt-4 flex flex-col gap-4 text-left font-sans text-base';
+
+                    for(let j = 0; j < 10; j++) {
+                        const fieldWrap = document.createElement('div');
+                        fieldWrap.className = 'flex flex-col';
+
+                        const lbl = document.createElement('label');
+                        lbl.className = 'text-pink-700 font-bold ml-1 mb-1';
+                        lbl.textContent = `Nombre para el Día ${j+1}`;
+
+                        const inp = document.createElement('input');
+                        inp.type = 'text';
+                        inp.id = `input-title-${j}`;
+                        inp.className = 'border border-pink-300 rounded-xl p-3 font-romantic text-2xl text-pink-900 focus:outline-none focus:border-pink-500 bg-white/80 shadow-sm';
+                        inp.placeholder = `Ej. Día ${j+1}`;
+                        inp.value = customTitles[j] || '';
+
+                        fieldWrap.appendChild(lbl);
+                        fieldWrap.appendChild(inp);
+                        formDiv.appendChild(fieldWrap);
+                    }
+
+                    const btnContainer = document.createElement('div');
+                    btnContainer.className = 'mt-6 flex justify-center';
+
+                    const saveBtn = document.createElement('button');
+                    saveBtn.className = 'primary-btn text-white rounded-full px-8 py-3 text-xl font-bold w-full sm:w-auto';
+                    saveBtn.innerHTML = '<i class="fa-solid fa-heart mr-2"></i>Guardar y descubrir el final';
+                    saveBtn.onclick = window.guardarNombres;
+
+                    btnContainer.appendChild(saveBtn);
+                    formDiv.appendChild(btnContainer);
+                    formWrapper.appendChild(formDiv);
+
+                    inner.innerHTML = '';
+                    inner.appendChild(formWrapper);
+                }
+            } else {
+                inner.innerHTML = contenidoHtml;
+            }
+        });
+    }
 
             const wrapper = document.createElement('article');
             wrapper.className = 'poem-wrapper';
