@@ -73,7 +73,6 @@
         .stage-light.left { left: 5%; transform: rotate(-15deg); }
         .stage-light.right { right: 5%; transform: rotate(15deg); }
 
-        /* Estado Abierto del Telón (Activado por scroll) ajustado */
         .curtains-open .curtain-panel.left { transform: translateX(-95%) scaleX(0.3); }
         .curtains-open .curtain-panel.right { transform: translateX(95%) scaleX(0.3); }
         .curtains-open .curtain-valance { transform: translateY(-30%) scaleY(0.8); }
@@ -127,7 +126,6 @@
 
     <div class="relative z-10 w-full max-w-3xl">
         <div class="mb-4 text-pink-500 text-3xl heart-float" aria-hidden="true">♡</div>
-        <!-- Texto con padding ajustado -->
         <p class="font-romantic text-2xl sm:text-3xl text-pink-700 mb-2 pt-10">Un pequeño regalo para ti</p>
         <h1 class="font-romantic text-5xl sm:text-7xl text-pink-800 leading-tight drop-shadow-sm">Hola, mi manzanita hermosa...</h1>
         <p class="font-romantic text-2xl sm:text-3xl text-pink-700 leading-snug mt-4 max-w-2xl mx-auto">
@@ -136,7 +134,6 @@
         </p>
         <p class="font-romantic text-2xl sm:text-3xl text-pink-600 mt-4 mb-10">13 días pensando en ti ~</p>
 
-        <!-- Temporizador Minimalista -->
         <div class="my-10">
             <p class="font-romantic text-2xl sm:text-3xl text-pink-600 mb-2">Faltan:</p>
             <div id="timer-display" class="timer-digits font-romantic text-6xl sm:text-8xl text-pink-700 tracking-wide tabular-nums drop-shadow-sm" role="timer" aria-live="off">00d 00:00:00</div>
@@ -155,7 +152,6 @@
         <p id="entry-status" class="sr-only" aria-live="polite"></p>
     </div>
 
-    <!-- Botón de música global -->
     <div class="fixed bottom-4 right-4 sm:bottom-6 sm:right-7 z-[60]">
         <button id="music-btn" type="button" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-pink-500 text-white shadow-lg music-pulse hover:bg-pink-600 transition" onclick="toggleMusic()" aria-label="Reproducir música" title="Música">
             <i id="music-icon" class="fa-solid fa-music text-xl"></i>
@@ -175,13 +171,10 @@
 </section>
 
 <section id="main-screen" class="screen screen-hidden paper-bg">
-
-    <!-- Contenedor del telón -->
     <div class="curtain-container" aria-hidden="true">
         <div class="stage-light left"></div>
         <div class="stage-light right"></div>
 
-        <!-- Cortina Izquierda Cerrada -->
         <div class="curtain-panel left">
             <svg viewBox="0 0 240 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                 <defs><linearGradient id="leftVelvet" x1="0" x2="1"><stop stop-color="#9d174d"/><stop offset=".28" stop-color="#db2777"/><stop offset=".58" stop-color="#f472b6"/><stop offset=".8" stop-color="#be185d"/><stop offset="1" stop-color="#831843"/></linearGradient></defs>
@@ -189,7 +182,6 @@
                 <path d="M32 0C70 180 30 330 79 480S45 730 70 900" fill="none" stroke="#fbcfe8" stroke-opacity=".35" stroke-width="5"/>
                 <path d="M112 0C146 180 103 340 135 500S105 740 124 900" fill="none" stroke="#831843" stroke-opacity=".4" stroke-width="12"/>
                 <path d="M0 0H240L225 45C170 70 82 35 0 72Z" fill="#f472b6"/>
-                <!-- Cordón Dorado Izquierdo -->
                 <g class="gold-cord" transform="translate(130, 350)">
                     <path d="M-50,-350 Q20,0 20,40" fill="none" stroke="#f8d9a0" stroke-width="4"/>
                     <path d="M20,40 Q40,60 10,80" fill="none" stroke="#f8d9a0" stroke-width="3"/>
@@ -199,7 +191,6 @@
             </svg>
         </div>
 
-        <!-- Cortina Derecha Cerrada -->
         <div class="curtain-panel right">
             <svg viewBox="0 0 240 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                 <defs><linearGradient id="rightVelvet" x1="0" x2="1"><stop stop-color="#831843"/><stop offset=".2" stop-color="#be185d"/><stop offset=".48" stop-color="#f472b6"/><stop offset=".72" stop-color="#db2777"/><stop offset="1" stop-color="#9d174d"/></linearGradient></defs>
@@ -207,7 +198,6 @@
                 <path d="M208 0C170 180 210 330 161 480S195 730 170 900" fill="none" stroke="#fbcfe8" stroke-opacity=".35" stroke-width="5"/>
                 <path d="M128 0C94 180 137 340 105 500S135 740 116 900" fill="none" stroke="#831843" stroke-opacity=".4" stroke-width="12"/>
                 <path d="M0 0H240V72C158 35 70 70 15 45Z" fill="#f472b6"/>
-                <!-- Cordón Dorado Derecho -->
                 <g class="gold-cord" transform="translate(110, 350)">
                     <path d="M50,-350 Q-20,0 -20,40" fill="none" stroke="#f8d9a0" stroke-width="4"/>
                     <path d="M-20,40 Q-40,60 -10,80" fill="none" stroke="#f8d9a0" stroke-width="3"/>
@@ -217,7 +207,6 @@
             </svg>
         </div>
 
-        <!-- Cenefa -->
         <div class="curtain-valance">
             <svg viewBox="0 0 1440 180" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
@@ -231,7 +220,6 @@
         </div>
     </div>
 
-    <!-- Contenido desplazable -->
     <main class="relative z-10 w-full max-w-3xl mx-auto px-5 pt-32 pb-16 sm:pt-40">
         <header class="text-center mb-12 sm:mb-16">
             <div class="text-pink-400 text-3xl mb-3" aria-hidden="true">♡</div>
@@ -247,7 +235,9 @@
     </main>
 </section>
 
-<audio id="bg-music" loop preload="none"></audio>
+<!-- Aquí integramos el reproductor oculto de YouTube -->
+<div id="youtube-player" style="display:none;"></div>
+<script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
     const targetDate = new Date(2026, 9, 14, 0, 0, 0).getTime();
@@ -293,7 +283,6 @@
         });
         window.scrollTo({ top: 0, behavior: 'auto' });
 
-        // Resetea el estado del telón al cambiar de pantalla
         if (screenId === 'main-screen') {
             checkScrollForCurtain();
         }
@@ -306,11 +295,10 @@
         setActiveScreen('main-screen');
     }
 
-    // Lógica del telón controlada por el scroll en el main-screen
     const mainScreen = document.getElementById('main-screen');
     function checkScrollForCurtain() {
         if (mainScreen.classList.contains('screen-active')) {
-            if (window.scrollY > 30) { // Se abre al bajar un poco
+            if (window.scrollY > 30) {
                 mainScreen.classList.add('curtains-open');
             } else {
                 mainScreen.classList.remove('curtains-open');
@@ -319,54 +307,45 @@
     }
     window.addEventListener('scroll', checkScrollForCurtain);
 
-    const bgMusic = document.getElementById('bg-music');
+    // Lógica para reproducir el Audio de YouTube
+    let ytPlayer;
+    function onYouTubeIframeAPIReady() {
+        ytPlayer = new YT.Player('youtube-player', {
+            height: '0',
+            width: '0',
+            videoId: 'SzJXikN_4wA',
+            playerVars: {
+                'autoplay': 0,
+                'controls': 0,
+                'disablekb': 1,
+                'loop': 1,
+                'playlist': 'SzJXikN_4wA' // Requerido para hacer loop
+            }
+        });
+    }
+
     const musicBtn = document.getElementById('music-btn');
     const musicIcon = document.getElementById('music-icon');
-    async function toggleMusic() {
-        if (!bgMusic.querySelector('source') && !bgMusic.getAttribute('src')) {
-            alert('Todavía falta añadir el archivo de música al proyecto.');
+
+    function toggleMusic() {
+        if (!ytPlayer || typeof ytPlayer.getPlayerState !== 'function') {
+            alert('La canción está cargando, intenta presionar en unos segundos.');
             return;
         }
-        if (bgMusic.paused) {
-            try {
-                await bgMusic.play();
-                musicIcon.className = 'fa-solid fa-pause text-xl';
-                musicBtn.classList.remove('music-pulse');
-            } catch (error) { console.error('Error audio:', error); }
-        } else {
-            bgMusic.pause();
+        const state = ytPlayer.getPlayerState();
+        // 1 = Reproduciendo, 3 = Cargando buffer
+        if (state === 1 || state === 3) {
+            ytPlayer.pauseVideo();
             musicIcon.className = 'fa-solid fa-music text-xl';
             musicBtn.classList.add('music-pulse');
+        } else {
+            ytPlayer.playVideo();
+            musicIcon.className = 'fa-solid fa-pause text-xl';
+            musicBtn.classList.remove('music-pulse');
         }
     }
 
     const poemas = [
-        'Hoy estuve pensando en ti,\n' +
-        'en lo mucho que te admiro\n' +
-        'en que sin ti no vivo, \n' +
-        'y si es que vivo, sentido no miro\n' +
-        'puesto que tuyo yo siempre eh sido\n' +
-        'Y es que no concivo,\n' +
-        'sin ti yo estar vivo,\n' +
-        'ya que contigo el tiempo no mido\n' +
-        'ya que a tu lado, solo lo mejor exhibo.\n' +
-        '\n' +
-        'Mi manzanita hermosa,\n' +
-        'cada que mi cuerpo rosas\n' +
-        'dulces sensaciones en mi dejas,\n' +
-        'desde tu voz en mis orejas\n' +
-        'hasta tu calor que quema mis quejas\n' +
-        '\n' +
-        'cada instante a tu lado\n' +
-        'cada segundo entre tus brazos\n' +
-        'es algo por lo que daría todo mi pasado\n' +
-        'para en tus manos dejar mis lazos\n' +
-        '\n' +
-        '\n' +
-        '\n' +
-        'bien escrito:\n' +
-        '\n' +
-        '\n' +
         'Hoy estuve pensando en ti,\n' +
         'en lo mucho que te admiro,\n' +
         'en que sin ti no vivo,\n' +
@@ -375,85 +354,21 @@
         'Y es que no concibo,\n' +
         'sin ti yo estar vivo,\n' +
         'ya que contigo el tiempo no mido,\n' +
-        'ya que a tu lado, solo lo mejor exhibo.\n' +
-        '\n' +
+        'ya que a tu lado, solo lo mejor exhibo.\n\n' +
         'Mi manzanita hermosa,\n' +
         'cada vez que mi cuerpo rozas,\n' +
         'dulces sensaciones en mí dejas,\n' +
         'desde tu voz en mis orejas,\n' +
-        'hasta tu calor que quema mis quejas.\n' +
-        '\n' +
+        'hasta tu calor que quema mis quejas.\n\n' +
         'Cada instante a tu lado,\n' +
         'cada segundo entre tus brazos,\n' +
         'es algo por lo que daría todo mi pasado,\n' +
-        'para quedarme a vivir en tus abrazos.\n' +
-        '\n',
-        'Entre la penumbra de la vida\n' +
-        'eres la luz que me anima\n' +
-        'entre la sombra de la huida\n' +
-        'tu voz es mi salida\n' +
-        '\n' +
-        'oh, corazón pedir perdón no debes\n' +
-        'pues entre lo que quisieres\n' +
-        'solo la mitad consigo darte\n' +
-        'sin embargo, implacable eres\n' +
-        'pues permaneces a mi lado\n' +
-        'aunque para acompañarte,\n' +
-        'tan solo tenga mi arte\n' +
-        'y si bien no es arte,\n' +
-        'siempre muero por besarte,\n' +
-        'oh amada mía, entre tantos seres,\n' +
-        'tan solo tú eres mi alegría.\n' +
-        '\n' +
-        'porfavor, disculparte no debes,\n' +
-        'entre todos los placeres\n' +
-        'con ninguno te compararía,\n' +
-        'pues de ti no me alejaría\n' +
-        'unicamente deseo mirarte,\n' +
-        'abrazarte y apretarte, \n' +
-        'sentirte distante mi alma parte,\n' +
-        'y si bien de mi no esperes\n' +
-        'más que el amarte y quererte,\n' +
-        'si tu deseo fuese más, sentirte mal no debes\n' +
-        'tú molestarme no puedes.\n' +
-        '\n' +
-        'Amarte jamás duele los jueves\n' +
-        'por eso amada mía, cada día\n' +
-        'me anima escuchar tu melodía,\n' +
-        'pedir perdón no debes,\n' +
-        'tu actuar alimenta mi poesía,\n' +
-        'tu calor inyecta en mí alegría.\n' +
-        '\n' +
-        'Que quede claro en estos versos\n' +
-        'sentirte mal no debes,\n' +
-        'mucho menos los días jueves\n' +
-        'pues tu amor es mi vida.\n' +
-        'dejo claro que mi deber es amarte\n' +
-        'y mi intención es explicarte,\n' +
-        'a travez de mis letras,\n' +
-        'que por más que comprometas\n' +
-        'pedir perdón no debes\n' +
-        'pues el amor se equivoca\n' +
-        'pero lo nuestro no se toca\n' +
-        'confundirte siempre puedes\n' +
-        'pero allá, donde nos encontramos\n' +
-        'eso no importa, pues tú no estas loca\n' +
-        'sabes bien que nos amamos.\n' +
-        '\n' +
-        '\n' +
-        '\n' +
-        '\n' +
-        '\n' +
-        'bien escrito:\n' +
-        '\n' +
-        '\n' +
-        '\n' +
-        '\n' +
+        'para quedarme a vivir en tus abrazos.',
+
         'Entre la penumbra de la vida,\n' +
         'eres la luz que me anima;\n' +
         'entre la sombra de la huida,\n' +
-        'tu voz es mi salida.\n' +
-        '\n' +
+        'tu voz es mi salida.\n\n' +
         'Oh, corazón, pedir perdón no debes,\n' +
         'pues entre lo que quisieras,\n' +
         'solo la mitad consigo darte;\n' +
@@ -464,8 +379,7 @@
         'Y, si bien no es arte,\n' +
         'siempre muero por besarte.\n' +
         'Oh, amada mía, entre tantos seres,\n' +
-        'tan solo tú eres mi alegría.\n' +
-        '\n' +
+        'tan solo tú eres mi alegría.\n\n' +
         'Por favor, disculparte no debes;\n' +
         'entre todos los placeres,\n' +
         'con ninguno te compararía,\n' +
@@ -476,15 +390,13 @@
         'y, si bien de mí no esperes\n' +
         'más que el amarte y quererte,\n' +
         'si tu deseo fuese más, sentirte mal no debes.\n' +
-        'Tú molestarme no puedes.\n' +
-        '\n' +
+        'Tú molestarme no puedes.\n\n' +
         'Amarte jamás duele los jueves,\n' +
         'por eso, amada mía, cada día\n' +
         'me anima escuchar tu melodía.\n' +
         'Pedir perdón no debes,\n' +
         'tu actuar alimenta mi poesía,\n' +
-        'tu calor inyecta en mí alegría.\n' +
-        '\n' +
+        'tu calor inyecta en mí alegría.\n\n' +
         'Que quede claro en estos versos:\n' +
         'sentirte mal no debes,\n' +
         'mucho menos los días jueves,\n' +
@@ -499,8 +411,8 @@
         'Confundirte siempre puedes,\n' +
         'pero allá, donde nos encontramos,\n' +
         'eso no importa, pues tú no estás loca;\n' +
-        'sabes bien que nos amamos.\n' +
-        '\n',
+        'sabes bien que nos amamos.',
+
         'Entre tus finos labios,\n' +
         'que el dolor extinguen\n' +
         'y sin perdón mi vida exigen,\n' +
@@ -509,8 +421,7 @@
         'pues de enfrentarlos soy incapaz.\n' +
         'Y podrá sonar burdaz,\n' +
         'pero, para ser muy justos,\n' +
-        'en ellos podría vivir por lustros.\n' +
-        '\n' +
+        'en ellos podría vivir por lustros.\n\n' +
         'Reflejándome en tus hermosos faros,\n' +
         'los que de mi vida son amos,\n' +
         'aquellos que, como el espacio, me envuelven\n' +
@@ -521,8 +432,7 @@
         'se fundiesen cual arcillas.\n' +
         'Que entre los placeres de la vida,\n' +
         'sentir tus olores y alegrías\n' +
-        'es aquello que me aviva.\n' +
-        '\n' +
+        'es aquello que me aviva.\n\n' +
         'Espero los micrófonos a sus costados\n' +
         'vibren de fragante alegría\n' +
         'al compás de mi poesía;\n' +
@@ -530,25 +440,23 @@
         'se inunden de lágrimas bellas\n' +
         'al sentir mi ortografía.\n' +
         'Cada uno de tus sentidos,\n' +
-        'oh, princesita mía,\n' +
-        '\n' +
+        'oh, princesita mía,\n\n' +
         'así como guías mis pasos,\n' +
         'quiero llenar tus brazos\n' +
         'de implacables melodías,\n' +
         'de infinitas poesías.\n' +
         'Quisiera llenar tu cuerpo\n' +
         'con aquellas sensaciones\n' +
-        'que hacen vibrar corazones.\n',
+        'que hacen vibrar corazones.',
+
         'Sobre ríos uniformes\n' +
         'navegan los informes,\n' +
         'que en desgracias sumen,\n' +
-        'pues la vida resumen.\n' +
-        '\n' +
+        'pues la vida resumen.\n\n' +
         'Registran las acciones,\n' +
         'logros y conversaciones;\n' +
         'también guardan divisiones,\n' +
-        'traiciones y adicciones.\n' +
-        '\n' +
+        'traiciones y adicciones.\n\n' +
         'Pero su alcance limitan,\n' +
         'puesto que en ellos\n' +
         'no hay más que destellos,\n' +
@@ -557,22 +465,19 @@
         'Pues hay algo que evitan,\n' +
         'aquello que da sentido\n' +
         'a los empedrados caminos\n' +
-        'que avanzamos erguidos.\n' +
-        '\n' +
+        'que avanzamos erguidos.\n\n' +
         'Entre sencillas tramas\n' +
         'encierran a los dramas,\n' +
         'pero entre sus palabras\n' +
         'olvidan aquellas brasas;\n' +
         'los momentos tan pequeños\n' +
-        'que avivan nuestros sueños.\n' +
-        '\n' +
+        'que avivan nuestros sueños.\n\n' +
         'Quienes llevan nuestros pasos\n' +
         'son las grandes coincidencias\n' +
         'que marcaron la existencia\n' +
         'de todos los seres vivos,\n' +
         'contenidas entre llantos\n' +
-        'o liberadas entre gritos.\n' +
-        '\n' +
+        'o liberadas entre gritos.\n\n' +
         'Pues nos guían nuestros sueños\n' +
         'y, si bien, tampoco somos dueños,\n' +
         'yo siempre he soñado\n' +
@@ -580,70 +485,61 @@
         'y disfrutar de nuestros lazos\n' +
         'en el calor de tus brazos;\n' +
         'pues lo mejor de estos ratos\n' +
-        'es vivir de tus abrazos.\n' +
-        '\n' +
+        'es vivir de tus abrazos.\n\n' +
         'De escribirte una canción\n' +
         'muere de ganas mi razón;\n' +
         'en esta vida, corazón,\n' +
         'no hagas trizas mi ilusión,\n' +
-        'se parte de cada oración.\n' +
-        '\n' +
+        'se parte de cada oración.\n\n' +
         'Pues este es mi deseo:\n' +
         'dedicarte mil y un besos;\n' +
         'los mantendré presos\n' +
         'entre todos mis versos,\n' +
         'hasta que tus oídos alcancen\n' +
-        'o en tus pupilas resalten.\n' +
-        '\n' +
+        'o en tus pupilas resalten.\n\n' +
         'Ya que lo que tenemos\n' +
         'resumirlo es imposible,\n' +
         'pues juntos existimos;\n' +
         'cada día nos amamos,\n' +
         'compartimos poesía\n' +
-        'y abrazamos la alegría.\n' +
-        '\n' +
+        'y abrazamos la alegría.\n\n' +
         'Aquello que nos enlaza\n' +
         'no cabría en una taza,\n' +
         'pues, sin lugar a dudas,\n' +
         'vernos con almas desnudas\n' +
         'y sabernos ambos propios\n' +
-        'nos genera innumerables gozos.\n' +
-        '\n' +
+        'nos genera innumerables gozos.\n\n' +
         'Así, cada día pintamos los trazos\n' +
         'que, entre cada uno de tus abrazos,\n' +
         'aseguran en mí los nudos\n' +
         'que aprietan nuestros lazos\n' +
-        'y hacen mis días tuyos.\n',
+        'y hacen mis días tuyos.',
+
         'La gente teme al espacio\n' +
         'no por ir despacio,\n' +
         'sino por su inmensidad\n' +
         'que, por incomprensión,\n' +
-        'confundimos con maldad.\n' +
-        '\n' +
+        'confundimos con maldad.\n\n' +
         'Pero no hay peor maldad\n' +
         'que evitar algo hermoso\n' +
         'por un miedo algo soso,\n' +
         'ya que entre la inmensidad\n' +
         'resaltan las estrellas\n' +
-        'y vaya que son bellas.\n' +
-        '\n' +
+        'y vaya que son bellas.\n\n' +
         'Tú no eres una estrella,\n' +
         'pero cargas dos de ellas\n' +
         'y entre sus destellos\n' +
-        'se apartan mis miedos.\n' +
-        '\n' +
+        'se apartan mis miedos.\n\n' +
         'Y si bien son como estrellas,\n' +
         'pues incesantes brillan,\n' +
         'son indudablemente profundos,\n' +
-        'analíticos, atrayentes y agudos.\n' +
-        '\n' +
+        'analíticos, atrayentes y agudos.\n\n' +
         'Así, tal vez no son estrellas\n' +
         'y son fábricas de ellas;\n' +
         'en ese caso, posees nebulosas\n' +
         'que son bellas y asombrosas;\n' +
         'con su gravedad me inspiras\n' +
-        'a mirarte todos los días.\n' +
-        '\n' +
+        'a mirarte todos los días.\n\n' +
         'Entre sus luces crías\n' +
         'en cantidades astronómicas\n' +
         'incesantes pensamientos\n' +
@@ -651,223 +547,186 @@
         'todo lo que en tu cabeza pesa.\n' +
         'Así, no será sorpresa\n' +
         'que yo observe las líricas\n' +
-        'y analice sus métricas.\n' +
-        '\n' +
+        'y analice sus métricas.\n\n' +
         'Entonces palabras me tiras\n' +
         'y con tu inmensidad me miras,\n' +
         'pero no importa qué digas,\n' +
         'pues ya sé lo que litigas.\n' +
         'Oh, corazón, de mí no te rías,\n' +
-        'pues no importa que sea a migas.\n' +
-        '\n' +
+        'pues no importa que sea a migas.\n\n' +
         'Ya que entenderte intento\n' +
         'y no descanso ni un momento,\n' +
         'pues entre el entendimiento\n' +
         'no existe un solo instante\n' +
-        'en que de ti sea distante.\n' +
-        '\n' +
+        'en que de ti sea distante.\n\n' +
         'Entre tus ojos me pierdo\n' +
         'pues me encanta hacerlo;\n' +
         'no existe mejor don\n' +
         'que a tu corazón poder llegar,\n' +
-        'logrando el espacio atravesar.\n',
+        'logrando el espacio atravesar.',
+
         'Hay seres que lo bello\n' +
         'observan con recelo,\n' +
         'pues fríos cual hielo\n' +
-        'la belleza no aguantan.\n' +
-        '\n' +
-        'E implacables cantan:\n' +
-        '\n' +
+        'la belleza no aguantan.\n\n' +
+        'E implacables cantan:\n\n' +
         '«Aquí los feos mandan\n' +
         'y nada hermoso levantan,\n' +
         'lo bello simplemente no existe,\n' +
-        'aunque aquello te ponga triste».\n' +
-        '\n' +
+        'aunque aquello te ponga triste».\n\n' +
         'Y, ante semejante melodía,\n' +
         'solo pienso: ¡qué tontería!,\n' +
         'pues cada que te nombran\n' +
         'mis sentidos se asombran;\n' +
         'secuestras mis pensamientos\n' +
-        'durante inmensos momentos.\n' +
-        '\n' +
+        'durante inmensos momentos.\n\n' +
         'Y, sin embargo, el escucharte\n' +
         'también lo considero arte;\n' +
         'cuando tus labios me buscan,\n' +
         'emocionados, mi nombre anuncian,\n' +
         'entonces, al encontrarme\n' +
-        'entre besos, buscan encerrarme.\n' +
-        '\n' +
+        'entre besos, buscan encerrarme.\n\n' +
         'Y yo solo puedo estar perplejo\n' +
         'ante tan hermoso cortejo.\n' +
         'Así pues, escrito dejo:\n' +
         'la belleza no es del hombre,\n' +
-        'pero qué hermoso es tu nombre.\n' +
-        '\n' +
+        'pero qué hermoso es tu nombre.\n\n' +
         'Pues, al pronunciarlo,\n' +
         'no son simples palabras,\n' +
         'sino preciosas melodías\n' +
-        'que podría cantar días.\n' +
-        '\n' +
+        'que podría cantar días.\n\n' +
         'Adilene, Adilene, Adilene,\n' +
         'cada día quisiera cantarte;\n' +
         'y en mil estrofas mencionarte\n' +
-        'o mil poemas al oído recitarte.\n' +
-        '\n' +
+        'o mil poemas al oído recitarte.\n\n' +
         'Pero con tan solo nombrarte,\n' +
         'yo ya muero por besarte.\n' +
         'Un secreto quiero contarte\n' +
-        'y es que por siempre quiero amarte.\n',
+        'y es que por siempre quiero amarte.',
+
         'Un lazo requiere constancia\n' +
         'para mantener el sentimiento,\n' +
-        'aunque haya gran distancia.\n' +
-        '\n' +
+        'aunque haya gran distancia.\n\n' +
         'Aún lejos, siempre te siento,\n' +
         'pues de mi vida eres un faro,\n' +
-        'y aun en pleno hundimiento,\n' +
-        '\n' +
+        'y aun en pleno hundimiento,\n\n' +
         'por más que parezca raro,\n' +
         'el solo pensar en tus manos\n' +
-        'a mi mente brinda amparo.\n' +
-        '\n' +
+        'a mi mente brinda amparo.\n\n' +
         'Y así, podrían pasar años,\n' +
         'pero sé que delante está la costa,\n' +
-        'y en ella, me esperan tus abrazos.\n' +
-        '\n' +
+        'y en ella, me esperan tus abrazos.\n\n' +
         'Y yo aguantaré hasta aquella hora;\n' +
         'entonces, el naufragio no es el fin,\n' +
-        'pues yo, sin duda, llegaré a la boda.\n' +
-        '\n' +
+        'pues yo, sin duda, llegaré a la boda.\n\n' +
         'Llegaré y te veré en el jardín,\n' +
         'y cuando estemos juntos, mi amor,\n' +
-        'nada importará de lo que viví,\n' +
-        '\n' +
-        'pues todo lo curarás con tu calor.\n',
+        'nada importará de lo que viví,\n\n' +
+        'pues todo lo curarás con tu calor.',
+
         'Cada día, captamos sensaciones\n' +
         'que en el aire perdidas vuelan,\n' +
         'y entre ellas, miles de olores\n' +
-        'en nuestros sentidos resuenan.\n' +
-        '\n' +
+        'en nuestros sentidos resuenan.\n\n' +
         'Algunos de ellos son imperceptibles,\n' +
         'otros simplemente imperdibles,\n' +
         'como los que de ti provienen\n' +
-        'e implacables, mi atención retienen.\n' +
-        '\n' +
+        'e implacables, mi atención retienen.\n\n' +
         'Pues gracias a tu dulce aroma,\n' +
         'el mundo girando se mantiene,\n' +
         'y las abejas trabajo tienen;\n' +
-        'gracias a ti las plantas asoman.\n' +
-        '\n' +
+        'gracias a ti las plantas asoman.\n\n' +
         'Los ríos fluyen y los peces vuelan,\n' +
         'las aves nadan y los animales cantan,\n' +
         'los autos avanzan y el sol brilla,\n' +
-        'pues a cualquier otro olor humilla.\n' +
-        '\n' +
+        'pues a cualquier otro olor humilla.\n\n' +
         'Tienes la fórmula precisa\n' +
         'que mi mundo necesitaba,\n' +
         'y aunque perdido estaba,\n' +
-        'yo ya encontré mi premisa.\n' +
-        '\n' +
+        'yo ya encontré mi premisa.\n\n' +
         'Y es que con tu hermosa esencia\n' +
         'atraes toda mi presencia,\n' +
         'mi manzanita hermosa,\n' +
-        'con color de mariposa.\n' +
-        '\n' +
+        'con color de mariposa.\n\n' +
         'Así pues, adicto me declaro\n' +
         'a aquel sabor que con descaro\n' +
         'en mis labios siempre dejas,\n' +
-        'con el olor que solo tú manejas.\n',
+        'con el olor que solo tú manejas.',
+
         'Cuando el sol nuestras pieles quema,\n' +
         'la sombra en alivio se convierte;\n' +
-        'vivimos atrapados sobre este esquema,\n' +
-        '\n' +
+        'vivimos atrapados sobre este esquema,\n\n' +
         'pues el exceso en nuestra contra arremete,\n' +
         'ya que, al revés, nos hundimos en penumbra\n' +
-        'cuando la sombra a su exceso nos somete.\n' +
-        '\n' +
+        'cuando la sombra a su exceso nos somete.\n\n' +
         'Y aunque uno a lo malo se acostumbra,\n' +
         'bueno saber que existe el equilibrio,\n' +
-        'pues es algo bello que la vida alumbra.\n' +
-        '\n' +
+        'pues es algo bello que la vida alumbra.\n\n' +
         'Y sí, todo aquello parece un delirio,\n' +
         'pero pongo cual ejemplo aquel eclipse\n' +
-        'en que tus manos acudieron en mi auxilio.\n' +
-        '\n' +
+        'en que tus manos acudieron en mi auxilio.\n\n' +
         'Pues aunque tal vez no me encontraba triste,\n' +
         'bien tampoco estaba, si requieres respuesta;\n' +
-        'me encontraba en el centro de una elipse.\n' +
-        '\n' +
+        'me encontraba en el centro de una elipse.\n\n' +
         'Y desde aquel punto encontré una apuesta:\n' +
         'sin dudar, entre tus dedos buscar mi camino.\n' +
-        'Entonces, corazón, te hice una propuesta:\n' +
-        '\n' +
+        'Entonces, corazón, te hice una propuesta:\n\n' +
         '«Sé mi novia, pues es nuestro destino;\n' +
         'junta tus labios con los míos, te pido,\n' +
-        'sellemos juntos nuestro lazo divino».\n' +
-        '\n' +
+        'sellemos juntos nuestro lazo divino».\n\n' +
         'Tal vez así no fue, pero no lo olvido,\n' +
         'pues juntos nuestro primer beso vivimos,\n' +
-        'y entonces nuestro amor dimos por nacido.\n' +
-        '\n' +
+        'y entonces nuestro amor dimos por nacido.\n\n' +
         'Claro, ahora sé que al caos no vencimos,\n' +
         'porque de alejarse del sol no se trata,\n' +
-        'pero recorrer el camino juntos elegimos,\n' +
-        '\n' +
+        'pero recorrer el camino juntos elegimos,\n\n' +
         'pues, sin duda, era la decisión más sensata,\n' +
         'ya que eso es el equilibrio, no la ausencia,\n' +
-        'sino encontrar lo que el sentimiento dilata,\n' +
-        '\n' +
-        'y esa, corazón, es sin duda nuestra esencia.\n',
+        'sino encontrar lo que el sentimiento dilata,\n\n' +
+        'y esa, corazón, es sin duda nuestra esencia.',
+
         'Quiero hablarte, corazón,\n' +
         'de aquello con que domas mi razón.\n' +
         'Entonces, manzanita bonita,\n' +
-        'déjame explicarte, porque es fácil amarte.\n' +
-        '\n' +
+        'déjame explicarte, porque es fácil amarte.\n\n' +
         'En primera, al curvar tus labios hacia arriba,\n' +
         'haces que todo a tu alrededor sonría;\n' +
-        'los días son más brillantes cuando muestras tus encías.\n' +
-        '\n' +
+        'los días son más brillantes cuando muestras tus encías.\n\n' +
         'En segunda, el sabor alegre que en mí dejas\n' +
         'cuando permites que bese tus mejillas,\n' +
         'o cuando te resistes implacable mientras ríes,\n' +
-        'pues sabes que no pararé hasta el besito dejarte.\n' +
-        '\n' +
+        'pues sabes que no pararé hasta el besito dejarte.\n\n' +
         'En tercera, el dulce aroma que desprendes,\n' +
         'pues, cual flor en primavera, mi atención te llevas.\n' +
         'Olerte podría todo el día, de verdad, no es mentira,\n' +
-        'pues aquel aroma es paz y sintonía.\n' +
-        '\n' +
+        'pues aquel aroma es paz y sintonía.\n\n' +
         'Como cuarta yo pondría el calor de tus abrazos,\n' +
         'pues, cual ardiente sol, calma el frío de mi vida\n' +
-        'y me da la energía para el mundo lograr conquistar.\n' +
-        '\n' +
+        'y me da la energía para el mundo lograr conquistar.\n\n' +
         'En la quinta, sin lugar a dudas, debo mencionar\n' +
         'aquella emoción al verte llegar, ya que, sin dudar,\n' +
         'a tu lado me insta a quedarme\n' +
-        'y no es por hacer alarde.\n' +
-        '\n' +
+        'y no es por hacer alarde.\n\n' +
         'Pero la sexta es, sin duda, caminar a tu lado\n' +
         'como dos seres que son uno mismo;\n' +
         'andar contigo sin soltarnos\n' +
-        'le da sentido a todo, pues ya nada más importa.\n' +
-        '\n' +
+        'le da sentido a todo, pues ya nada más importa.\n\n' +
         'Y la séptima, sin duda, es que eres quien me ayuda.\n' +
         'Cuando no quiero ver a nadie, siempre acudes en mi auxilio,\n' +
-        'como una heroína que solo por mí acude.\n' +
-        '\n' +
+        'como una heroína que solo por mí acude.\n\n' +
         'Como octava, no dudo en poner\n' +
         'el poder que transmites cuando tu atención en un juego centras\n' +
         'y todo rojo golpeas y, como buena veterana,\n' +
-        'a todo el equipo carreas.\n' +
-        '\n' +
+        'a todo el equipo carreas.\n\n' +
         'La novena, manzanita, estoy seguro que sería\n' +
         'cuando finges molestia solo para mi atención llamar,\n' +
         'porque no es que no me dé cuenta;\n' +
-        'de hecho, me hace emocionar.\n' +
-        '\n' +
+        'de hecho, me hace emocionar.\n\n' +
         'Y como décima, creo que debo mencionar\n' +
         'que no pondré una décima razón, pues de solo pensar en ti, corazón,\n' +
         'veo que no las necesito,\n' +
-        'pues nunca podría esta lista terminar.\n',
+        'pues nunca podría esta lista terminar.',
+
         'Para ti, Adilene: este último sobre guarda algo que quería decirte cuando llegara nuestro día.'
     ];
 
@@ -895,9 +754,12 @@
         content.className = 'poem-content';
         const inner = document.createElement('div');
         inner.className = 'poem-content-inner';
+
         const paragraph = document.createElement('p');
-        paragraph.className = 'rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900';
+        // Agregamos whitespace-pre-line aquí para que se vean los saltos de línea (\n)
+        paragraph.className = 'rounded-b-2xl bg-white/70 border-x border-b border-pink-200 px-5 pb-5 text-center font-romantic text-2xl sm:text-3xl leading-relaxed text-pink-900 whitespace-pre-line';
         paragraph.textContent = locked ? 'Esta carta todavía está esperando su momento. Vuelve el 14 de octubre, Adilene. ♡' : poema;
+
         inner.appendChild(paragraph);
         content.appendChild(inner);
         wrapper.append(header, content);
